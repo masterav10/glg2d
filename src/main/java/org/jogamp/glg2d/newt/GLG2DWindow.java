@@ -1,19 +1,16 @@
 package org.jogamp.glg2d.newt;
 
-import javax.media.nativewindow.NativeWindow;
+import java.awt.Toolkit;
+
+import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCapabilitiesImmutable;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 
 import org.jogamp.glg2d.GLG2DHeadlessListener;
 import org.jogamp.glg2d.GLG2DSimpleEventListener;
 import org.jogamp.glg2d.event.NewtMouseEventTranslator;
 
-import com.jogamp.newt.NewtFactory;
-import com.jogamp.newt.Screen;
-import com.jogamp.newt.Window;
-import com.jogamp.newt.event.WindowAdapter;
-import com.jogamp.newt.event.WindowEvent;
+import com.jogamp.newt.event.WindowListener;
 import com.jogamp.newt.opengl.GLWindow;
 
 /**
@@ -25,17 +22,18 @@ import com.jogamp.newt.opengl.GLWindow;
  * @author Dan Avila
  * 
  * @see #create(GLCapabilitiesImmutable)
- * @see #create(NativeWindow, GLCapabilitiesImmutable)
- * @see #create(Screen, GLCapabilitiesImmutable)
- * @see #create(Window)
  */
-public class GLG2DWindow extends GLWindow
+public class GLG2DWindow
 {
+	private static final String TOOLKIT_KEY = "awt.toolkit";
+	private static final Class<?> TOOLKIT_CLASS = GLG2DWindowToolkit.class;
+
 	private GLG2DSimpleEventListener painterListener;
 	private GLG2DHeadlessListener reshapeListener;
 	private NewtMouseEventTranslator evtListener;
 
-	private JFrame container = new GLG2DFrame(this);
+	private GLWindow window;
+	private GLG2DFrame container;
 
 	/**
 	 * Creates a new GLG2DWindow.
@@ -46,24 +44,29 @@ public class GLG2DWindow extends GLWindow
 	 * @param window
 	 *            - the native window implementation.
 	 */
-	protected GLG2DWindow(Window window)
+	protected GLG2DWindow(GLWindow window)
 	{
-		super(window);
+		this.window = window;
 
-		this.addWindowListener(new WindowAdapter()
-		{
-			@Override
-			public void windowDestroyed(WindowEvent e)
-			{
-				System.exit(0);
-			}
-		});
+		container = new GLG2DFrame(window);
 	}
 
 	/**
-	 * The content pane.
+	 * This method provides access to the drawable used.
+	 * 
+	 * @return the accelerated drawable.
+	 */
+	public GLAutoDrawable getDrawable()
+	{
+		return window;
+	}
+
+	/**
+	 * Changes the content pane of this window. Does nothing if "component" is
+	 * null.
 	 * 
 	 * @param component
+	 *            - the new content pane.
 	 */
 	public void setContentPane(JComponent component)
 	{
@@ -71,30 +74,106 @@ public class GLG2DWindow extends GLWindow
 		{
 			this.container.setContentPane(component);
 
-			this.removeGLEventListener(painterListener);
-			this.removeGLEventListener(reshapeListener);
+			if (window.isVisible())
+			{
+				// add notify has already been called if the window is visible
+				this.container.verifyHierarchy(component);
+			}
+
+			window.removeGLEventListener(painterListener);
+			window.removeGLEventListener(reshapeListener);
 			painterListener = new GLG2DSimpleEventListener(
 			        container.getRootPane());
 			reshapeListener = new GLG2DHeadlessListener(container.getRootPane());
-			addGLEventListener(painterListener);
-			addGLEventListener(reshapeListener);
+			window.addGLEventListener(painterListener);
+			window.addGLEventListener(reshapeListener);
 
-			this.removeMouseListener(evtListener);
+			window.removeMouseListener(evtListener);
 			this.evtListener = new NewtMouseEventTranslator(component);
-			addMouseListener(evtListener);
+			window.addMouseListener(evtListener);
 		}
 	}
 
-	public void setVisibler(boolean visible)
+	/**
+	 * The frame becomes visible once set here.
+	 * 
+	 * @param visible
+	 *            - true to show the window, false otherwise.
+	 */
+	public void setVisible(boolean visible)
 	{
 		container.setVisible(visible);
-		setVisible(true);
+		window.setVisible(visible);
 	}
 
+	/**
+	 * Creates a new {@link GLG2DWindow}. This method will attempt to set the
+	 * {@link Toolkit} to the correct implementation, and will fail if the
+	 * toolkit has already been set.
+	 * 
+	 * @param caps
+	 *            - the requested GL capabilities of the provided window.
+	 * @return the new window.
+	 * @throws IllegalStateException
+	 *             if the correct toolkit is not used.
+	 */
 	public static GLG2DWindow create(GLCapabilitiesImmutable caps)
 	{
-		Window window = NewtFactory.createWindow(caps);
+		System.setProperty(TOOLKIT_KEY,
+		        "org.jogamp.glg2d.newt.GLG2DWindowToolkit");
+
+		if (!TOOLKIT_CLASS.isInstance(Toolkit.getDefaultToolkit()))
+		{
+			String sep = System.getProperty("line.separator");
+
+			throw new IllegalStateException(
+			        "GLG2DWindow requires a special toolkit to work. Use "
+			                + sep + "-Dawt.toolkit="
+			                + GLG2DWindowToolkit.class.getName());
+		}
+
+		GLWindow window = GLWindow.create(caps);
 
 		return new GLG2DWindow(window);
+	}
+
+	/**
+	 * Set the size of the window.
+	 * 
+	 * @param width
+	 *            - the width of the window.
+	 * @param height
+	 *            - the height of the window.
+	 */
+	public void setSize(int width, int height)
+	{
+		window.setSize(width, height);
+	}
+
+	/**
+	 * Removes the decoration toolbar from this window.
+	 * 
+	 * @param value
+	 *            - true if decorations should be removed, false otherwise.
+	 */
+	public void setUndecorated(boolean value)
+	{
+		window.setUndecorated(value);
+	}
+
+	/**
+	 * The title for this window.
+	 * 
+	 * @param title
+	 *            - the title.
+	 */
+	public void setTitle(String title)
+	{
+		window.setTitle(title);
+	}
+
+	public void addWindowListener(WindowListener listener)
+	{
+		window.addWindowListener(listener);
 	}
 }

@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -79,6 +81,41 @@ public class ContentPane extends JPanel
 		swapTab.add(createColorButton("BLUE", swapPanel));
 
 		pane.addTab("Color Swap", swapTab);
+
+		JComboBox<String> comboBox = new JComboBox<>(new String[]
+		{ "ONE", "TWO", "THREE", "FOUR", "FIVE" });
+
+		pane.addTab("Combo Box", comboBox);
+
+		pane.addTab("File Chooser", fileChooser());
+	}
+
+	private Component fileChooser()
+	{
+		final JFileChooser chooser = new JFileChooser();
+
+		JPanel panel = new JPanel();
+
+		JButton open = new JButton("Open...");
+
+		open.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				int i = chooser.showOpenDialog(null);
+
+				if (i == JFileChooser.APPROVE_OPTION)
+				{
+					System.err.println("File selected: "
+					        + chooser.getSelectedFile());
+				}
+			}
+		});
+
+		panel.add(open);
+
+		return panel;
 	}
 
 	private JButton createColorButton(final String name, final Container parent)

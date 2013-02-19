@@ -2,12 +2,8 @@ package org.jogamp.glg2d.newt;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Graphics;
-import java.util.logging.Logger;
 
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JPopupMenu;
 import javax.swing.JViewport;
 
 import org.jogamp.glg2d.GLG2DCanvas;
@@ -58,12 +54,5 @@ class GLG2DFrame extends JFrame
 				verifyHierarchy(cont.getComponent(i));
 			}
 		}
-	}
-
-	@Override
-	public Graphics getGraphics()
-	{
-		// TODO Auto-generated method stub
-		return super.getGraphics();
 	}
 }

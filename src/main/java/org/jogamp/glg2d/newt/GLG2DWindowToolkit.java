@@ -59,6 +59,7 @@ import java.awt.peer.ListPeer;
 import java.awt.peer.MenuBarPeer;
 import java.awt.peer.MenuItemPeer;
 import java.awt.peer.MenuPeer;
+import java.awt.peer.MouseInfoPeer;
 import java.awt.peer.PanelPeer;
 import java.awt.peer.PopupMenuPeer;
 import java.awt.peer.ScrollPanePeer;
@@ -69,6 +70,8 @@ import java.awt.peer.WindowPeer;
 import java.net.URL;
 import java.util.Map;
 import java.util.Properties;
+
+import javax.swing.SwingUtilities;
 
 import sun.awt.KeyboardFocusManagerPeerProvider;
 
@@ -84,15 +87,22 @@ public class GLG2DWindowToolkit extends Toolkit implements
 	public static final Toolkit INST = new GLG2DWindowToolkit();
 
 	private EventQueue event = new EventQueue();
+	private GLG2DMousePeer defaultMousePeer = new GLG2DMousePeer();
+
+	@Override
+	protected MouseInfoPeer getMouseInfoPeer()
+	{
+		return defaultMousePeer;
+	}
 
 	@Override
 	protected LightweightPeer createComponent(Component target)
 	{
-		// LightweightPeer peer = new GLG2DLightweightPeer(target);
-		//
-		// return peer;
+		LightweightPeer peer = new GLG2DLightweightPeer(target);
 
-		return super.createComponent(target);
+		return peer;
+
+		// return super.createComponent(target);
 	}
 
 	@Override
@@ -152,7 +162,6 @@ public class GLG2DWindowToolkit extends Toolkit implements
 	protected ScrollPanePeer createScrollPane(ScrollPane target)
 	        throws HeadlessException
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -171,6 +180,7 @@ public class GLG2DWindowToolkit extends Toolkit implements
 		return null;
 	}
 
+	// TODO: Until this is implemented properly, this method will not work.
 	@Override
 	protected FramePeer createFrame(Frame target) throws HeadlessException
 	{
@@ -195,9 +205,17 @@ public class GLG2DWindowToolkit extends Toolkit implements
 
 	@Override
 	protected WindowPeer createWindow(Window target) throws HeadlessException
-	{
-		// TODO Auto-generated method stub
-		return null;
+	{		
+		Window window = SwingUtilities.getWindowAncestor(target);
+
+		if (window instanceof GLG2DFrame)
+		{
+			return new GLG2DWindowPeer((Frame) window);
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	@Override

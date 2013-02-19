@@ -37,6 +37,7 @@ import com.jogamp.newt.opengl.GLWindow;
 
 public class GLG2DWindowPeer implements FramePeer
 {
+	private static final Dimension MIN_SIZE = new Dimension(0, 0);
 	private GLG2DFrame frame;
 
 	public GLG2DWindowPeer(Frame target)
@@ -247,18 +248,22 @@ public class GLG2DWindowPeer implements FramePeer
 		return awtTempPoint;
 	}
 
+	private Dimension sizeCache = new Dimension();
+
 	@Override
 	public Dimension getPreferredSize()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		GLWindow window = frame.getWindow();
+
+		sizeCache.setSize(window.getWidth(), window.getHeight());
+
+		return sizeCache;
 	}
 
 	@Override
 	public Dimension getMinimumSize()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return MIN_SIZE;
 	}
 
 	@Override

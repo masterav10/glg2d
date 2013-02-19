@@ -23,8 +23,8 @@ import java.awt.peer.ComponentPeer;
 import java.awt.peer.ContainerPeer;
 import java.awt.peer.LightweightPeer;
 
-import sun.awt.NullComponentPeer;
 import sun.awt.CausedFocusEvent.Cause;
+import sun.awt.NullComponentPeer;
 import sun.java2d.pipe.Region;
 
 /**
@@ -36,6 +36,8 @@ import sun.java2d.pipe.Region;
  */
 public class GLG2DLightweightPeer implements LightweightPeer
 {
+	private static final Dimension MIN_SIZE = new Dimension(0, 0);
+
 	private Component target;
 
 	public GLG2DLightweightPeer(Component target)
@@ -47,7 +49,14 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	{
 		StackTraceElement[] trace = Thread.currentThread().getStackTrace();
 
-		String name = target.getClass().getSimpleName();
+		String name = target.getClass().getName();
+
+		// if ("".equals(name.trim()))
+		// {
+		// name = target.getClass().getName();
+		//
+		// name = name.substring(name.lastIndexOf('.') + 1);
+		// }
 
 		System.err.println(name + ": " + trace[2]);
 	}
@@ -134,16 +143,16 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public Dimension getPreferredSize()
 	{
 		log();
-		// TODO Auto-generated method stub
-		return null;
+
+		return MIN_SIZE;
 	}
 
 	@Override
 	public Dimension getMinimumSize()
 	{
 		log();
-		// TODO Auto-generated method stub
-		return null;
+
+		return MIN_SIZE;
 	}
 
 	@Override
@@ -187,7 +196,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public void setForeground(Color c)
 	{
-		log();
+		// log();
 		// TODO Auto-generated method stub
 
 	}
@@ -195,7 +204,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public void setBackground(Color c)
 	{
-		log();
+		// log();
 		// TODO Auto-generated method stub
 
 	}
@@ -203,7 +212,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public void setFont(Font f)
 	{
-		log();
+		// log();
 		// TODO Auto-generated method stub
 
 	}
