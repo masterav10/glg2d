@@ -1,6 +1,9 @@
 package org.jogamp.glg2d.newt;
 
 import java.awt.Toolkit;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCapabilitiesImmutable;
@@ -23,10 +26,20 @@ import com.jogamp.newt.opengl.GLWindow;
  * 
  * @see #create(GLCapabilitiesImmutable)
  */
-public class GLG2DWindow
-{
+public class GLG2DWindow {
 	private static final String TOOLKIT_KEY = "awt.toolkit";
-	private static final Class<?> TOOLKIT_CLASS = GLG2DWindowToolkit.class;
+
+	/**
+	 * This map holds toolkits in descending order. Because the API is subject
+	 * to change over time, it is necessary to do this. The version closest to
+	 * the current runtime will be specified.
+	 */
+	private static final Map<String, Class<?>> TOOLKIT_CLASSES = new LinkedHashMap<String, Class<?>>();
+
+	static {
+		TOOLKIT_CLASSES.put("1.7", GLG2DWindowToolkit7.class);
+		TOOLKIT_CLASSES.put("1.6", GLG2DWindowToolkit6.class);
+	}
 
 	private GLG2DSimpleEventListener painterListener;
 	private GLG2DHeadlessListener reshapeListener;
@@ -44,8 +57,7 @@ public class GLG2DWindow
 	 * @param window
 	 *            - the native window implementation.
 	 */
-	protected GLG2DWindow(GLWindow window)
-	{
+	protected GLG2DWindow(GLWindow window) {
 		this.window = window;
 
 		container = new GLG2DFrame(window);
@@ -56,8 +68,7 @@ public class GLG2DWindow
 	 * 
 	 * @return the accelerated drawable.
 	 */
-	public GLAutoDrawable getDrawable()
-	{
+	public GLAutoDrawable getDrawable() {
 		return window;
 	}
 
@@ -68,14 +79,11 @@ public class GLG2DWindow
 	 * @param component
 	 *            - the new content pane.
 	 */
-	public void setContentPane(JComponent component)
-	{
-		if (component != null)
-		{
+	public void setContentPane(JComponent component) {
+		if (component != null) {
 			this.container.setContentPane(component);
 
-			if (window.isVisible())
-			{
+			if (window.isVisible()) {
 				// add notify has already been called if the window is visible
 				this.container.verifyHierarchy(component);
 			}
@@ -83,7 +91,7 @@ public class GLG2DWindow
 			window.removeGLEventListener(painterListener);
 			window.removeGLEventListener(reshapeListener);
 			painterListener = new GLG2DSimpleEventListener(
-			        container.getRootPane());
+					container.getRootPane());
 			reshapeListener = new GLG2DHeadlessListener(container.getRootPane());
 			window.addGLEventListener(painterListener);
 			window.addGLEventListener(reshapeListener);
@@ -100,8 +108,7 @@ public class GLG2DWindow
 	 * @param visible
 	 *            - true to show the window, false otherwise.
 	 */
-	public void setVisible(boolean visible)
-	{
+	public void setVisible(boolean visible) {
 		container.setVisible(visible);
 		window.setVisible(visible);
 	}
@@ -117,19 +124,34 @@ public class GLG2DWindow
 	 * @throws IllegalStateException
 	 *             if the correct toolkit is not used.
 	 */
-	public static GLG2DWindow create(GLCapabilitiesImmutable caps)
-	{
-		System.setProperty(TOOLKIT_KEY,
-		        "org.jogamp.glg2d.newt.GLG2DWindowToolkit");
+	public static GLG2DWindow create(GLCapabilitiesImmutable caps) {
 
-		if (!TOOLKIT_CLASS.isInstance(Toolkit.getDefaultToolkit()))
-		{
+		System.setProperty(TOOLKIT_KEY,
+				"org.jogamp.glg2d.newt.GLG2DWindowToolkit");
+
+		// TODO: Not sure if this property is available on all systems /
+		// platforms.
+		String version = System.getProperty("java.version");
+
+		Class<?> toolkitClass = null;
+
+		for (Entry<String, Class<?>> toolkitEntry : TOOLKIT_CLASSES.entrySet()) {
+			String currentVersion = toolkitEntry.getKey();
+
+			if (currentVersion.startsWith(version)
+					|| currentVersion.compareTo(version) <= 0) {
+				toolkitClass = toolkitEntry.getValue();
+				break;
+			}
+		}
+
+		if (toolkitClass == null
+				|| !toolkitClass.isInstance(Toolkit.getDefaultToolkit())) {
 			String sep = System.getProperty("line.separator");
 
 			throw new IllegalStateException(
-			        "GLG2DWindow requires a special toolkit to work. Use "
-			                + sep + "-Dawt.toolkit="
-			                + GLG2DWindowToolkit.class.getName());
+					"GLG2DWindow requires a special toolkit to work. Use "
+							+ sep + "-Dawt.toolkit=" + toolkitClass.getName());
 		}
 
 		GLWindow window = GLWindow.create(caps);
@@ -145,8 +167,7 @@ public class GLG2DWindow
 	 * @param height
 	 *            - the height of the window.
 	 */
-	public void setSize(int width, int height)
-	{
+	public void setSize(int width, int height) {
 		window.setSize(width, height);
 	}
 
@@ -156,8 +177,7 @@ public class GLG2DWindow
 	 * @param value
 	 *            - true if decorations should be removed, false otherwise.
 	 */
-	public void setUndecorated(boolean value)
-	{
+	public void setUndecorated(boolean value) {
 		window.setUndecorated(value);
 	}
 
@@ -167,13 +187,11 @@ public class GLG2DWindow
 	 * @param title
 	 *            - the title.
 	 */
-	public void setTitle(String title)
-	{
+	public void setTitle(String title) {
 		window.setTitle(title);
 	}
 
-	public void addWindowListener(WindowListener listener)
-	{
+	public void addWindowListener(WindowListener listener) {
 		window.addWindowListener(listener);
 	}
 }

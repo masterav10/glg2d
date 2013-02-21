@@ -7,8 +7,8 @@ import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLProfile;
 import javax.swing.JComponent;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import com.jogamp.newt.event.WindowAdapter;
 import com.jogamp.newt.event.WindowEvent;
@@ -29,37 +29,48 @@ import com.jogamp.opengl.util.Animator;
  * @author Naval Undersea Warfare Center, Newport RI
  * 
  */
-public abstract class NEWTUITest
-{
+public abstract class NEWTUITest {
 	private static final boolean USE_NIMBUS = false;
 
 	private GLG2DWindow window;
 
-	public void display() throws UnsupportedLookAndFeelException
-	{
+	public void display() throws UnsupportedLookAndFeelException {
 		display(USE_NIMBUS);
 	}
 
-	public void display(boolean b) throws UnsupportedLookAndFeelException
-	{
+	public void display(boolean b) throws UnsupportedLookAndFeelException {
 		display(USE_NIMBUS, 400, 400);
 	}
 
 	public void display(int width, int height)
-	        throws UnsupportedLookAndFeelException
-	{
+			throws UnsupportedLookAndFeelException {
 		display(USE_NIMBUS, width, height);
 	}
 
 	public void display(boolean useNimbus, int width, int height)
-	        throws UnsupportedLookAndFeelException
-	{
+			throws UnsupportedLookAndFeelException {
 		final Animator animator = new Animator();
 		animator.setRunAsFastAsPossible(true);
 
-		if (useNimbus)
-		{
-			UIManager.setLookAndFeel(new NimbusLookAndFeel());
+		if (useNimbus) {
+			for (LookAndFeelInfo lf : UIManager.getInstalledLookAndFeels()) {
+
+				if ("nimbus".equals(lf.getName())) {
+					try {
+						UIManager.setLookAndFeel(lf.getClassName());
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (InstantiationException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IllegalAccessException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					break;
+				}
+			}
 		}
 
 		GLCapabilities caps = new GLCapabilities(GLProfile.getDefault());
@@ -71,26 +82,21 @@ public abstract class NEWTUITest
 		window.setVisible(true);
 		window.setTitle(this.getClass().getSimpleName());
 
-		window.addWindowListener(new WindowAdapter()
-		{
-			public void windowDestroyed(WindowEvent e)
-			{
+		window.addWindowListener(new WindowAdapter() {
+			public void windowDestroyed(WindowEvent e) {
 				System.exit(0);
 			}
 		});
 
 		animator.add(window.getDrawable());
-		Executors.newSingleThreadExecutor().execute(new Runnable()
-		{
-			public void run()
-			{
+		Executors.newSingleThreadExecutor().execute(new Runnable() {
+			public void run() {
 				animator.start();
 			}
 		});
 	}
 
-	public String getName()
-	{
+	public String getName() {
 		return this.getClass().getSimpleName();
 	}
 
@@ -102,8 +108,7 @@ public abstract class NEWTUITest
 	 */
 	protected abstract JComponent getContentPane();
 
-	protected GLAutoDrawable getDrawable()
-	{
+	protected GLAutoDrawable getDrawable() {
 		return window.getDrawable();
 	}
 }

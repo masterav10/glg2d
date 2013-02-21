@@ -35,211 +35,154 @@ import sun.java2d.pipe.Region;
 
 import com.jogamp.newt.opengl.GLWindow;
 
-public class GLG2DWindowPeer implements FramePeer
-{
+public class GLG2DWindowPeer implements FramePeer {
 	private static final Dimension MIN_SIZE = new Dimension(0, 0);
 	private GLG2DFrame frame;
 
-	public GLG2DWindowPeer(Frame target)
-	{
-		if (target instanceof GLG2DFrame)
-		{
+	public GLG2DWindowPeer(Frame target) {
+		if (target instanceof GLG2DFrame) {
 			frame = (GLG2DFrame) target;
-		}
-		else
-		{
+		} else {
 			throw new IllegalArgumentException(
-			        "Frame must be a GLG2DFrame when using this toolkit.");
+					"Frame must be a GLG2DFrame when using this toolkit.");
 		}
 	}
 
-	@Override
-	public void toFront()
-	{
+	public void toFront() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void toBack()
-	{
+	public void toBack() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void setAlwaysOnTop(boolean alwaysOnTop)
-	{
+	public void setAlwaysOnTop(boolean alwaysOnTop) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void updateFocusableWindowState()
-	{
+	public void updateFocusableWindowState() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void setModalBlocked(Dialog blocker, boolean blocked)
-	{
+	public void setModalBlocked(Dialog blocker, boolean blocked) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void updateMinimumSize()
-	{
+	public void updateMinimumSize() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void updateIconImages()
-	{
+	public void updateIconImages() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void setOpacity(float opacity)
-	{
+	public void setOpacity(float opacity) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void setOpaque(boolean isOpaque)
-	{
+	public void setOpaque(boolean isOpaque) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void updateWindow()
-	{
+	public void updateWindow() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void repositionSecurityWarning()
-	{
+	public void repositionSecurityWarning() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public Insets getInsets()
-	{
+	public Insets getInsets() {
 		GLWindow window = frame.getWindow();
 
 		InsetsImmutable glinsets = window.getInsets();
 
 		Insets insets = new Insets(glinsets.getTopHeight(),
-		        glinsets.getLeftWidth(), glinsets.getBottomHeight(),
-		        glinsets.getRightWidth());
+				glinsets.getLeftWidth(), glinsets.getBottomHeight(),
+				glinsets.getRightWidth());
 
 		return insets;
 	}
 
-	@Override
-	public void beginValidate()
-	{
+	public void beginValidate() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void endValidate()
-	{
+	public void endValidate() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void beginLayout()
-	{
+	public void beginLayout() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void endLayout()
-	{
+	public void endLayout() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public boolean isObscured()
-	{
+	public boolean isObscured() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
-	public boolean canDetermineObscurity()
-	{
+	public boolean canDetermineObscurity() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
-	public void setVisible(boolean v)
-	{
+	public void setVisible(boolean v) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void setEnabled(boolean e)
-	{
+	public void setEnabled(boolean e) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void paint(Graphics g)
-	{
+	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void print(Graphics g)
-	{
+	public void print(Graphics g) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void setBounds(int x, int y, int width, int height, int op)
-	{
+	public void setBounds(int x, int y, int width, int height, int op) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void handleEvent(AWTEvent e)
-	{
+	public void handleEvent(AWTEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void coalescePaintEvent(PaintEvent e)
-	{
+	public void coalescePaintEvent(PaintEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
 	private Point awtTempPoint = new Point();
 
-	@Override
-	public Point getLocationOnScreen()
-	{
+	public Point getLocationOnScreen() {
 		GLWindow window = frame.getWindow();
 
 		awtTempPoint.x = window.getX();
@@ -250,9 +193,7 @@ public class GLG2DWindowPeer implements FramePeer
 
 	private Dimension sizeCache = new Dimension();
 
-	@Override
-	public Dimension getPreferredSize()
-	{
+	public Dimension getPreferredSize() {
 		GLWindow window = frame.getWindow();
 
 		sizeCache.setSize(window.getWidth(), window.getHeight());
@@ -260,262 +201,248 @@ public class GLG2DWindowPeer implements FramePeer
 		return sizeCache;
 	}
 
-	@Override
-	public Dimension getMinimumSize()
-	{
+	public Dimension getMinimumSize() {
 		return MIN_SIZE;
 	}
 
-	@Override
-	public ColorModel getColorModel()
-	{
+	public ColorModel getColorModel() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public Toolkit getToolkit()
-	{
+	public Toolkit getToolkit() {
 		return Toolkit.getDefaultToolkit();
 	}
 
-	@Override
-	public Graphics getGraphics()
-	{
+	public Graphics getGraphics() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public FontMetrics getFontMetrics(Font font)
-	{
+	public FontMetrics getFontMetrics(Font font) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public void dispose()
-	{
+	public void dispose() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void setForeground(Color c)
-	{
+	public void setForeground(Color c) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void setBackground(Color c)
-	{
+	public void setBackground(Color c) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void setFont(Font f)
-	{
+	public void setFont(Font f) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void updateCursorImmediately()
-	{
+	public void updateCursorImmediately() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public boolean requestFocus(Component lightweightChild, boolean temporary,
-	        boolean focusedWindowChangeAllowed, long time, Cause cause)
-	{
+			boolean focusedWindowChangeAllowed, long time, Cause cause) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
-	public boolean isFocusable()
-	{
+	public boolean isFocusable() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
-	public Image createImage(ImageProducer producer)
-	{
+	public Image createImage(ImageProducer producer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public Image createImage(int width, int height)
-	{
+	public Image createImage(int width, int height) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public VolatileImage createVolatileImage(int width, int height)
-	{
+	public VolatileImage createVolatileImage(int width, int height) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public boolean prepareImage(Image img, int w, int h, ImageObserver o)
-	{
+	public boolean prepareImage(Image img, int w, int h, ImageObserver o) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
-	public int checkImage(Image img, int w, int h, ImageObserver o)
-	{
+	public int checkImage(Image img, int w, int h, ImageObserver o) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
-	public GraphicsConfiguration getGraphicsConfiguration()
-	{
+	public GraphicsConfiguration getGraphicsConfiguration() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public boolean handlesWheelScrolling()
-	{
+	public boolean handlesWheelScrolling() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public void createBuffers(int numBuffers, BufferCapabilities caps)
-	        throws AWTException
-	{
+			throws AWTException {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public Image getBackBuffer()
-	{
+	public Image getBackBuffer() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public void flip(int x1, int y1, int x2, int y2, FlipContents flipAction)
-	{
+	public void flip(int x1, int y1, int x2, int y2, FlipContents flipAction) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void destroyBuffers()
-	{
+	public void destroyBuffers() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void reparent(ContainerPeer newContainer)
-	{
+	public void reparent(ContainerPeer newContainer) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public boolean isReparentSupported()
-	{
+	public boolean isReparentSupported() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
-	public void layout()
-	{
+	public void layout() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void applyShape(Region shape)
-	{
+	public void applyShape(Region shape) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void setZOrder(ComponentPeer above)
-	{
+	public void setTitle(String title) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public boolean updateGraphicsData(GraphicsConfiguration gc)
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void setTitle(String title)
-	{
+	public void setMenuBar(MenuBar mb) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void setMenuBar(MenuBar mb)
-	{
+	public void setResizable(boolean resizeable) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void setResizable(boolean resizeable)
-	{
+	public void setState(int state) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void setState(int state)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public int getState()
-	{
+	public int getState() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
-	public void setMaximizedBounds(Rectangle bounds)
-	{
+	public void setMaximizedBounds(Rectangle bounds) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void setBoundsPrivate(int x, int y, int width, int height)
-	{
+	public void setBoundsPrivate(int x, int y, int width, int height) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public Rectangle getBoundsPrivate()
-	{
+	public Rectangle getBoundsPrivate() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public boolean requestWindowFocus() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public Insets insets() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean isPaintPending() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean isRestackSupported() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void restack() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void disable() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void enable() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public Rectangle getBounds() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void hide() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public Dimension minimumSize() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Dimension preferredSize() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void repaint(long arg0, int arg1, int arg2, int arg3, int arg4) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void reshape(int arg0, int arg1, int arg2, int arg3) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void show() {
+		// TODO Auto-generated method stub
+
 	}
 }

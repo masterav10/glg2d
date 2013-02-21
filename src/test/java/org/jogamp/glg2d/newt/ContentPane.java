@@ -26,14 +26,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
-public class ContentPane extends JPanel
-{
+public class ContentPane extends JPanel {
 	private static final long serialVersionUID = 7824314575532663002L;
 
 	private CardLayout cardLayout = new CardLayout();
 
-	public ContentPane()
-	{
+	public ContentPane() {
 		setLayout(new GridLayout(2, 2));
 		setBackground(Color.GREEN);
 
@@ -54,8 +52,7 @@ public class ContentPane extends JPanel
 		int gridSize = 6;
 		JPanel buttonPanel = new JPanel(new GridLayout(gridSize, gridSize));
 
-		for (int i = 0; i < gridSize * gridSize; i++)
-		{
+		for (int i = 0; i < gridSize * gridSize; i++) {
 			AbstractButton button = createRandomButtonType();
 			button.addActionListener(new PrintIfVisibleAction());
 
@@ -68,9 +65,9 @@ public class ContentPane extends JPanel
 
 		pane.addTab("Text Comps", textPanel);
 		textPanel
-		        .add(new JScrollPane(
-		                new JTextArea(
-		                        "Text area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\n")));
+				.add(new JScrollPane(
+						new JTextArea(
+								"Text area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\nText area.\n")));
 		textPanel.add(new JTextField("Text field."));
 		textPanel.add(new JFormattedTextField("Formatted text field."));
 		textPanel.add(new JPasswordField("Password"));
@@ -82,33 +79,29 @@ public class ContentPane extends JPanel
 
 		pane.addTab("Color Swap", swapTab);
 
-		JComboBox<String> comboBox = new JComboBox<>(new String[]
-		{ "ONE", "TWO", "THREE", "FOUR", "FIVE" });
+		JComboBox comboBox = new JComboBox(new String[] { "ONE", "TWO",
+				"THREE", "FOUR", "FIVE" });
 
 		pane.addTab("Combo Box", comboBox);
 
 		pane.addTab("File Chooser", fileChooser());
 	}
 
-	private Component fileChooser()
-	{
+	private Component fileChooser() {
 		final JFileChooser chooser = new JFileChooser();
 
 		JPanel panel = new JPanel();
 
 		JButton open = new JButton("Open...");
 
-		open.addActionListener(new ActionListener()
-		{
+		open.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				int i = chooser.showOpenDialog(null);
 
-				if (i == JFileChooser.APPROVE_OPTION)
-				{
+				if (i == JFileChooser.APPROVE_OPTION) {
 					System.err.println("File selected: "
-					        + chooser.getSelectedFile());
+							+ chooser.getSelectedFile());
 				}
 			}
 		});
@@ -118,23 +111,19 @@ public class ContentPane extends JPanel
 		return panel;
 	}
 
-	private JButton createColorButton(final String name, final Container parent)
-	{
+	private JButton createColorButton(final String name, final Container parent) {
 		JButton button = new JButton(name);
 
 		button.setText(name);
 
-		button.addActionListener(new ActionListener()
-		{
+		button.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				cardLayout.show(parent, name);
 
-				for (Component comp : parent.getComponents())
-				{
+				for (Component comp : parent.getComponents()) {
 					System.err.println(comp.getName() + " showing="
-					        + comp.isShowing());
+							+ comp.isShowing());
 				}
 			}
 		});
@@ -142,12 +131,10 @@ public class ContentPane extends JPanel
 		return button;
 	}
 
-	private AbstractButton createRandomButtonType()
-	{
+	private AbstractButton createRandomButtonType() {
 		int value = (int) (Math.random() * 4);
 
-		switch (value)
-		{
+		switch (value) {
 		case 0:
 			return new JToggleButton("T");
 		case 1:
@@ -159,8 +146,7 @@ public class ContentPane extends JPanel
 		}
 	}
 
-	private JPanel createSwapPanel()
-	{
+	private JPanel createSwapPanel() {
 		JPanel panel = new JPanel(cardLayout);
 
 		JPanel background = new JPanel();
@@ -176,15 +162,12 @@ public class ContentPane extends JPanel
 		return panel;
 	}
 
-	private static class PrintIfVisibleAction implements ActionListener
-	{
+	private static class PrintIfVisibleAction implements ActionListener {
 		@Override
-		public void actionPerformed(ActionEvent e)
-		{
+		public void actionPerformed(ActionEvent e) {
 			AbstractButton button = (AbstractButton) e.getSource();
 
-			if (button.isShowing())
-			{
+			if (button.isShowing()) {
 				String name = button.getClass().getSimpleName();
 
 				System.err.println(name + " clicked!");
