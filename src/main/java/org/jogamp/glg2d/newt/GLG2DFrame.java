@@ -19,6 +19,9 @@ class GLG2DFrame extends JFrame
 	public GLG2DFrame(GLWindow window)
 	{
 		this.window = window;
+
+		setUndecorated(true);
+		setIgnoreRepaint(true);
 	}
 
 	public GLWindow getWindow()

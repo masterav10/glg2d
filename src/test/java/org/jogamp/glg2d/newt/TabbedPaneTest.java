@@ -13,11 +13,13 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author Naval Undersea Warfare Center, Newport RI
  * 
  */
-public class TabbedPaneTest extends NEWTUITest {
-	private List<NEWTUITest> tests = new ArrayList<NEWTUITest>();
+public class TabbedPaneTest extends NEWTUITest
+{
+	private List<NEWTUITest> tests = new ArrayList<>();
 
 	@Override
-	protected JComponent getContentPane() {
+	protected JComponent getContentPane()
+	{
 		tests.add(new ButtonTest());
 		tests.add(new CardLayoutTest());
 		tests.add(new ColorChooserTest());
@@ -35,7 +37,8 @@ public class TabbedPaneTest extends NEWTUITest {
 
 		JTabbedPane pane = new JTabbedPane();
 
-		for (NEWTUITest test : tests) {
+		for (NEWTUITest test : tests)
+		{
 			pane.addTab(test.getName(), test.getContentPane());
 		}
 
@@ -43,7 +46,8 @@ public class TabbedPaneTest extends NEWTUITest {
 	}
 
 	public static void main(String[] args)
-			throws UnsupportedLookAndFeelException {
+	        throws UnsupportedLookAndFeelException
+	{
 		new TabbedPaneTest().display(600, 500);
 	}
 }

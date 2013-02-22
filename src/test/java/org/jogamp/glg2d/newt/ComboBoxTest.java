@@ -23,10 +23,10 @@ public class ComboBoxTest extends NEWTUITest
 
 		JPanel panel = new JPanel(new GridLayout(0, 1));
 
-		JComboBox comboBox = new JComboBox(data);
+		JComboBox<String> comboBox = new JComboBox<String>(data);
 		panel.add(comboBox);
 
-		JComboBox editableBox = new JComboBox(data);
+		JComboBox<String> editableBox = new JComboBox<String>(data);
 		editableBox.setEditable(true);
 		panel.add(editableBox);
 

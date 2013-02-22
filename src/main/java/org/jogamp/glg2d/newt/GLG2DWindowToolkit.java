@@ -18,6 +18,7 @@ import java.awt.FontMetrics;
 import java.awt.Frame;
 import java.awt.HeadlessException;
 import java.awt.Image;
+import java.awt.KeyboardFocusManager;
 import java.awt.Label;
 import java.awt.List;
 import java.awt.Menu;
@@ -51,6 +52,7 @@ import java.awt.peer.DialogPeer;
 import java.awt.peer.FileDialogPeer;
 import java.awt.peer.FontPeer;
 import java.awt.peer.FramePeer;
+import java.awt.peer.KeyboardFocusManagerPeer;
 import java.awt.peer.LabelPeer;
 import java.awt.peer.LightweightPeer;
 import java.awt.peer.ListPeer;
@@ -71,26 +73,32 @@ import java.util.Properties;
 
 import javax.swing.SwingUtilities;
 
+import sun.awt.KeyboardFocusManagerPeerProvider;
+
 /**
  * -Dawt.toolkit=org.jogamp.glg2d.newt.GLG2DWindowToolkit
  * 
  * @author Naval Undersea Warfare Center, Newport RI
  * 
  */
-public class GLG2DWindowToolkit6 extends Toolkit {
-	public static final Toolkit INST = new GLG2DWindowToolkit6();
+public class GLG2DWindowToolkit extends Toolkit implements
+        KeyboardFocusManagerPeerProvider
+{
+	public static final Toolkit INST = new GLG2DWindowToolkit();
 
 	private EventQueue event = new EventQueue();
 	private GLG2DMousePeer defaultMousePeer = new GLG2DMousePeer();
 
 	@Override
-	protected MouseInfoPeer getMouseInfoPeer() {
+	protected MouseInfoPeer getMouseInfoPeer()
+	{
 		return defaultMousePeer;
 	}
 
 	@Override
-	protected LightweightPeer createComponent(Component target) {
-		LightweightPeer peer = new GLG2DLightweightPeer6(target);
+	protected LightweightPeer createComponent(Component target)
+	{
+		LightweightPeer peer = new GLG2DLightweightPeer(target);
 
 		return peer;
 
@@ -99,290 +107,344 @@ public class GLG2DWindowToolkit6 extends Toolkit {
 
 	@Override
 	protected DesktopPeer createDesktopPeer(Desktop target)
-			throws HeadlessException {
+	        throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected ButtonPeer createButton(Button target) throws HeadlessException {
+	protected ButtonPeer createButton(Button target) throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected TextFieldPeer createTextField(TextField target)
-			throws HeadlessException {
+	        throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected LabelPeer createLabel(Label target) throws HeadlessException {
+	protected LabelPeer createLabel(Label target) throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected ListPeer createList(List target) throws HeadlessException {
+	protected ListPeer createList(List target) throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected CheckboxPeer createCheckbox(Checkbox target)
-			throws HeadlessException {
+	        throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected ScrollbarPeer createScrollbar(Scrollbar target)
-			throws HeadlessException {
+	        throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected ScrollPanePeer createScrollPane(ScrollPane target)
-			throws HeadlessException {
+	        throws HeadlessException
+	{
 		return null;
 	}
 
 	@Override
 	protected TextAreaPeer createTextArea(TextArea target)
-			throws HeadlessException {
+	        throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected ChoicePeer createChoice(Choice target) throws HeadlessException {
+	protected ChoicePeer createChoice(Choice target) throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	// TODO: Until this is implemented properly, this method will not work.
 	@Override
-	protected FramePeer createFrame(Frame target) throws HeadlessException {
+	protected FramePeer createFrame(Frame target) throws HeadlessException
+	{
 		FramePeer peer = new GLG2DWindowPeer(target);
 
 		return peer;
 	}
 
 	@Override
-	protected CanvasPeer createCanvas(Canvas target) {
+	protected CanvasPeer createCanvas(Canvas target)
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected PanelPeer createPanel(Panel target) {
+	protected PanelPeer createPanel(Panel target)
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected WindowPeer createWindow(Window target) throws HeadlessException {
+	protected WindowPeer createWindow(Window target) throws HeadlessException
+	{
 		Window window = SwingUtilities.getWindowAncestor(target);
 
-		if (window instanceof GLG2DFrame) {
+		if (window instanceof GLG2DFrame)
+		{
 			return new GLG2DWindowPeer((Frame) window);
-		} else {
+		}
+		else
+		{
 			return null;
 		}
 	}
 
 	@Override
-	protected DialogPeer createDialog(Dialog target) throws HeadlessException {
+	protected DialogPeer createDialog(Dialog target) throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected MenuBarPeer createMenuBar(MenuBar target)
-			throws HeadlessException {
+	        throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected MenuPeer createMenu(Menu target) throws HeadlessException {
+	protected MenuPeer createMenu(Menu target) throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected PopupMenuPeer createPopupMenu(PopupMenu target)
-			throws HeadlessException {
+	        throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected MenuItemPeer createMenuItem(MenuItem target)
-			throws HeadlessException {
+	        throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected FileDialogPeer createFileDialog(FileDialog target)
-			throws HeadlessException {
+	        throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected CheckboxMenuItemPeer createCheckboxMenuItem(
-			CheckboxMenuItem target) throws HeadlessException {
+	        CheckboxMenuItem target) throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	@Deprecated
-	protected FontPeer getFontPeer(String name, int style) {
+	protected FontPeer getFontPeer(String name, int style)
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Dimension getScreenSize() throws HeadlessException {
+	public Dimension getScreenSize() throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int getScreenResolution() throws HeadlessException {
+	public int getScreenResolution() throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public ColorModel getColorModel() throws HeadlessException {
+	public ColorModel getColorModel() throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	@Deprecated
-	public String[] getFontList() {
+	public String[] getFontList()
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	@Deprecated
-	public FontMetrics getFontMetrics(Font font) {
+	public FontMetrics getFontMetrics(Font font)
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void sync() {
+	public void sync()
+	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public Image getImage(String filename) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Image getImage(URL url) {
+	public Image getImage(String filename)
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Image createImage(String filename) {
+	public Image getImage(URL url)
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Image createImage(URL url) {
+	public Image createImage(String filename)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Image createImage(URL url)
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean prepareImage(Image image, int width, int height,
-			ImageObserver observer) {
+	        ImageObserver observer)
+	{
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public int checkImage(Image image, int width, int height,
-			ImageObserver observer) {
+	        ImageObserver observer)
+	{
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public Image createImage(ImageProducer producer) {
+	public Image createImage(ImageProducer producer)
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Image createImage(byte[] imagedata, int imageoffset, int imagelength) {
+	public Image createImage(byte[] imagedata, int imageoffset, int imagelength)
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PrintJob getPrintJob(Frame frame, String jobtitle, Properties props) {
+	public PrintJob getPrintJob(Frame frame, String jobtitle, Properties props)
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void beep() {
+	public void beep()
+	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public Clipboard getSystemClipboard() throws HeadlessException {
+	public Clipboard getSystemClipboard() throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected EventQueue getSystemEventQueueImpl() {
+	protected EventQueue getSystemEventQueueImpl()
+	{
 		return event;
 	}
 
 	@Override
 	public DragSourceContextPeer createDragSourceContextPeer(
-			DragGestureEvent dge) throws InvalidDnDOperationException {
+	        DragGestureEvent dge) throws InvalidDnDOperationException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean isModalityTypeSupported(ModalityType modalityType) {
+	public boolean isModalityTypeSupported(ModalityType modalityType)
+	{
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isModalExclusionTypeSupported(
-			ModalExclusionType modalExclusionType) {
+	        ModalExclusionType modalExclusionType)
+	{
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public Map<TextAttribute, ?> mapInputMethodHighlight(
-			InputMethodHighlight highlight) throws HeadlessException {
+	        InputMethodHighlight highlight) throws HeadlessException
+	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public KeyboardFocusManagerPeer createKeyboardFocusManagerPeer(
+	        KeyboardFocusManager arg0)
+	{
+		return new GLG2DWindowKeyboardPeer(arg0);
 	}
 
 }
