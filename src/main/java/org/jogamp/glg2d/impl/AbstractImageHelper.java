@@ -251,6 +251,8 @@ public abstract class AbstractImageHelper implements GLG2DImageHelper
 
 	protected BufferedImage toBufferedImage(Image image)
 	{
+		// XXX: Dan - I added this to get my test case work, not sure if this is
+		// the correct approach. Should the image coming in here ever be null?
 		if (image == null)
 		{
 			return null;
