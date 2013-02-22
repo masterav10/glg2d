@@ -77,6 +77,6 @@ public class TableTest extends NEWTUITest
 	public static void main(String[] args)
 	        throws UnsupportedLookAndFeelException
 	{
-		new TableTest().display(600, 300);
+		new TableTest().setSize(600, 300).display();
 	}
 }

@@ -46,6 +46,6 @@ public class SpinnerTest extends NEWTUITest
 	public static void main(String[] args)
 	        throws UnsupportedLookAndFeelException
 	{
-		new SpinnerTest().display(100, 100);
+		new SpinnerTest().setSize(100, 100).display();
 	}
 }

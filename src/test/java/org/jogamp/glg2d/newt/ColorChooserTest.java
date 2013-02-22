@@ -23,6 +23,6 @@ public class ColorChooserTest extends NEWTUITest
 	public static void main(String[] args)
 	        throws UnsupportedLookAndFeelException
 	{
-		new ColorChooserTest().display(600, 400);
+		new ColorChooserTest().setSize(600, 400).display();
 	}
 }

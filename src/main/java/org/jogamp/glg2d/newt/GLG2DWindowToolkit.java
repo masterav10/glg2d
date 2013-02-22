@@ -75,7 +75,14 @@ import javax.swing.SwingUtilities;
 
 import sun.awt.KeyboardFocusManagerPeerProvider;
 
+import com.jogamp.newt.Display;
+import com.jogamp.newt.NewtFactory;
+import com.jogamp.newt.Screen;
+
 /**
+ * This toolkit provides integration between Newt and Swing through GLG2D. AWT
+ * components are not supported.
+ * 
  * -Dawt.toolkit=org.jogamp.glg2d.newt.GLG2DWindowToolkit
  * 
  * @author Dan Avila
@@ -84,6 +91,12 @@ import sun.awt.KeyboardFocusManagerPeerProvider;
 public class GLG2DWindowToolkit extends Toolkit implements
         KeyboardFocusManagerPeerProvider
 {
+	private static final RuntimeException UNSUPPORTED_DEPRECATED = new UnsupportedOperationException(
+	        "This toolkit does not support deprecated methods.");
+
+	private static final RuntimeException UNSUPPORTED_AWT = new UnsupportedOperationException(
+	        "This toolkit does not support AWT native peers outside of a window.");
+
 	private EventQueue event = new GLG2DAwareEventQueue();
 	private GLG2DMousePeer defaultMousePeer = new GLG2DMousePeer();
 
@@ -96,86 +109,77 @@ public class GLG2DWindowToolkit extends Toolkit implements
 	@Override
 	protected LightweightPeer createComponent(Component target)
 	{
-		LightweightPeer peer = new GLG2DLightweightPeer(target);
+		// LightweightPeer peer = new GLG2DLightweightPeer(target);
+		//
+		// return peer;
 
-		return peer;
-
-		// return super.createComponent(target);
+		return super.createComponent(target);
 	}
 
 	@Override
 	protected DesktopPeer createDesktopPeer(Desktop target)
 	        throws HeadlessException
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected ButtonPeer createButton(Button target) throws HeadlessException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
 	protected TextFieldPeer createTextField(TextField target)
 	        throws HeadlessException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
 	protected LabelPeer createLabel(Label target) throws HeadlessException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
 	protected ListPeer createList(List target) throws HeadlessException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
 	protected CheckboxPeer createCheckbox(Checkbox target)
 	        throws HeadlessException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
 	protected ScrollbarPeer createScrollbar(Scrollbar target)
 	        throws HeadlessException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
 	protected ScrollPanePeer createScrollPane(ScrollPane target)
 	        throws HeadlessException
 	{
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
 	protected TextAreaPeer createTextArea(TextArea target)
 	        throws HeadlessException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
 	protected ChoicePeer createChoice(Choice target) throws HeadlessException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	// TODO: Until this is implemented properly, this method will not work.
@@ -190,15 +194,13 @@ public class GLG2DWindowToolkit extends Toolkit implements
 	@Override
 	protected CanvasPeer createCanvas(Canvas target)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
 	protected PanelPeer createPanel(Panel target)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
@@ -227,31 +229,27 @@ public class GLG2DWindowToolkit extends Toolkit implements
 	protected MenuBarPeer createMenuBar(MenuBar target)
 	        throws HeadlessException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
 	protected MenuPeer createMenu(Menu target) throws HeadlessException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
 	protected PopupMenuPeer createPopupMenu(PopupMenu target)
 	        throws HeadlessException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
 	protected MenuItemPeer createMenuItem(MenuItem target)
 	        throws HeadlessException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
@@ -266,23 +264,25 @@ public class GLG2DWindowToolkit extends Toolkit implements
 	protected CheckboxMenuItemPeer createCheckboxMenuItem(
 	        CheckboxMenuItem target) throws HeadlessException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
 	@Deprecated
 	protected FontPeer getFontPeer(String name, int style)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
 	public Dimension getScreenSize() throws HeadlessException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Display display = NewtFactory.createDisplay(null, true);
+		Screen screen = NewtFactory.createScreen(display, 0);
+
+		Dimension dim = new Dimension(screen.getWidth(), screen.getHeight());
+
+		return dim;
 	}
 
 	@Override
@@ -295,31 +295,27 @@ public class GLG2DWindowToolkit extends Toolkit implements
 	@Override
 	public ColorModel getColorModel() throws HeadlessException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return ColorModel.getRGBdefault();
 	}
 
 	@Override
 	@Deprecated
 	public String[] getFontList()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_DEPRECATED;
 	}
 
 	@Override
 	@Deprecated
 	public FontMetrics getFontMetrics(Font font)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_DEPRECATED;
 	}
 
 	@Override
 	public void sync()
 	{
-		// TODO Auto-generated method stub
-
+		// This method does nothing.
 	}
 
 	@Override
@@ -383,15 +379,13 @@ public class GLG2DWindowToolkit extends Toolkit implements
 	@Override
 	public PrintJob getPrintJob(Frame frame, String jobtitle, Properties props)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
 	public void beep()
 	{
-		// TODO Auto-generated method stub
-
+		throw UNSUPPORTED_AWT;
 	}
 
 	@Override
@@ -442,7 +436,7 @@ public class GLG2DWindowToolkit extends Toolkit implements
 	public KeyboardFocusManagerPeer createKeyboardFocusManagerPeer(
 	        KeyboardFocusManager arg0)
 	{
-		return new GLG2DWindowKeyboardPeer(arg0);
+		return new GLG2DWindowKeyboardPeer();
 	}
 
 }

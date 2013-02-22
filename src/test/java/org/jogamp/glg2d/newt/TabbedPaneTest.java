@@ -1,9 +1,14 @@
 package org.jogamp.glg2d.newt;
 
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -42,12 +47,35 @@ public class TabbedPaneTest extends NEWTUITest
 			pane.addTab(test.getName(), test.getContentPane());
 		}
 
-		return pane;
+		JPanel panel = new JPanel(new GridLayout(2, 2));
+
+		panel.add(pane);
+		panel.add(exit());
+		panel.add(exit());
+		panel.add(new CanvasTest().getContentPane());
+
+		return panel;
+	}
+
+	private JButton exit()
+	{
+		JButton button = new JButton("Exit");
+
+		button.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				System.exit(0);
+			}
+		});
+
+		return button;
 	}
 
 	public static void main(String[] args)
 	        throws UnsupportedLookAndFeelException
 	{
-		new TabbedPaneTest().display(600, 500);
+		new TabbedPaneTest().setSize(600, 500).display();
 	}
 }

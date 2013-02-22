@@ -1,10 +1,8 @@
 package org.jogamp.glg2d.newt;
 
 import java.awt.Component;
-import java.awt.KeyboardFocusManager;
 import java.awt.Window;
 import java.awt.peer.KeyboardFocusManagerPeer;
-
 
 /**
  * 
@@ -15,11 +13,6 @@ public class GLG2DWindowKeyboardPeer implements KeyboardFocusManagerPeer
 {
 	private Component currentFocusOwner;
 	private Window currentFocusWindow;
-
-	public GLG2DWindowKeyboardPeer(KeyboardFocusManager manager)
-	{
-
-	}
 
 	@Override
 	public Window getCurrentFocusedWindow()
@@ -36,11 +29,6 @@ public class GLG2DWindowKeyboardPeer implements KeyboardFocusManagerPeer
 		{
 			this.currentFocusWindow = (Window) comp;
 		}
-
-		if (this.currentFocusOwner != null)
-		{
-			System.err.println("FOCUS=" + currentFocusOwner.getClass());
-		}
 	}
 
 	@Override
@@ -52,6 +40,6 @@ public class GLG2DWindowKeyboardPeer implements KeyboardFocusManagerPeer
 	@Override
 	public void clearGlobalFocusOwner(Window activeWindow)
 	{
-		// TODO Auto-generated method stub
+		// TODO:
 	}
 }

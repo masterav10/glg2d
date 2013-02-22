@@ -167,6 +167,18 @@ public class GLG2DWindow
 	}
 
 	/**
+	 * Enters this window in fullscreen mode. Passing false to this method will
+	 * remove the window from fullscreen.
+	 * 
+	 * @param fullscreen
+	 *            - true if this window should go fullscreen.
+	 */
+	public void setFullscreen(boolean fullscreen)
+	{
+		window.setFullscreen(fullscreen);
+	}
+
+	/**
 	 * The title for this window.
 	 * 
 	 * @param title

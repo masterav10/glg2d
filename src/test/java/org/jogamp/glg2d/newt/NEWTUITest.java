@@ -31,35 +31,51 @@ import com.jogamp.opengl.util.Animator;
  */
 public abstract class NEWTUITest
 {
-	private static final boolean USE_NIMBUS = false;
-
 	private GLG2DWindow window;
+	private int width = 400;
+	private int height = 400;
+	private boolean useNimbus = false;
+	private boolean fullScreen = false;
 
-	public void display() throws UnsupportedLookAndFeelException
+	public NEWTUITest setSize(int width, int height)
 	{
-		display(USE_NIMBUS);
+		return this;
 	}
 
-	public void display(boolean b) throws UnsupportedLookAndFeelException
+	public NEWTUITest setFullScreen(boolean fullScreen)
 	{
-		display(USE_NIMBUS, 400, 400);
+		this.fullScreen = fullScreen;
+
+		return this;
 	}
 
-	public void display(int width, int height)
-	        throws UnsupportedLookAndFeelException
+	public NEWTUITest setNimbus(boolean useNimbus)
 	{
-		display(USE_NIMBUS, width, height);
+		this.useNimbus = useNimbus;
+
+		return this;
 	}
 
-	public void display(boolean useNimbus, int width, int height)
-	        throws UnsupportedLookAndFeelException
+	/**
+	 * @see #setFullScreen(boolean)
+	 * @see #setNimbus(boolean)
+	 * @see #setSize(int, int)
+	 */
+	public void display()
 	{
 		final Animator animator = new Animator();
 		animator.setRunAsFastAsPossible(true);
 
 		if (useNimbus)
 		{
-			UIManager.setLookAndFeel(new NimbusLookAndFeel());
+			try
+			{
+				UIManager.setLookAndFeel(new NimbusLookAndFeel());
+			}
+			catch (UnsupportedLookAndFeelException e1)
+			{
+				e1.printStackTrace();
+			}
 		}
 
 		GLCapabilities caps = new GLCapabilities(GLProfile.getDefault());
@@ -67,9 +83,10 @@ public abstract class NEWTUITest
 
 		window.setContentPane(getContentPane());
 
+		window.setTitle(this.getClass().getSimpleName());
 		window.setSize(width, height);
 		window.setVisible(true);
-		window.setTitle(this.getClass().getSimpleName());
+		window.setFullscreen(fullScreen);
 
 		window.addWindowListener(new WindowAdapter()
 		{

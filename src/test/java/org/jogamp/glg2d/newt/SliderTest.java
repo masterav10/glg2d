@@ -59,6 +59,6 @@ public class SliderTest extends NEWTUITest
 	public static void main(String[] args)
 	        throws UnsupportedLookAndFeelException
 	{
-		new SliderTest().display(700, 400);
+		new SliderTest().setSize(700, 400).display();
 	}
 }
