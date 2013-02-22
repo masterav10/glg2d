@@ -78,7 +78,7 @@ import sun.awt.KeyboardFocusManagerPeerProvider;
 /**
  * -Dawt.toolkit=org.jogamp.glg2d.newt.GLG2DWindowToolkit
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class GLG2DWindowToolkit extends Toolkit implements

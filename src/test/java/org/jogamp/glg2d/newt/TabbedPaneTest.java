@@ -10,7 +10,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  * Contains all of the provides tests into one big test case.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class TabbedPaneTest extends NEWTUITest

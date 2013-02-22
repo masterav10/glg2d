@@ -7,7 +7,7 @@ import java.awt.peer.MouseInfoPeer;
 /**
  * Basic stub to prevent an exception from being thrown.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class GLG2DMousePeer implements MouseInfoPeer

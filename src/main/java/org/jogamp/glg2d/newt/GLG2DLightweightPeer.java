@@ -31,8 +31,7 @@ import sun.java2d.pipe.Region;
  * This is a modified version of the {@link NullComponentPeer} provided by sun.
  * This class implements basic peer functionality.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
- * 
+ * @author Dan Avila
  */
 public class GLG2DLightweightPeer implements LightweightPeer
 {

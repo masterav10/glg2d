@@ -16,7 +16,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  * This test demonstrates text components and scroll panes.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class TextTest extends NEWTUITest

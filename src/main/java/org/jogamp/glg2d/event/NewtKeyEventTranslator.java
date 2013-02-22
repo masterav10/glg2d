@@ -11,7 +11,7 @@ import com.jogamp.newt.event.KeyListener;
 /**
  * This class handles the translation between key events and mouse events.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class NewtKeyEventTranslator implements KeyListener

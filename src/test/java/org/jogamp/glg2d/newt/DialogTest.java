@@ -17,7 +17,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * This test provides a series of buttons that bring up dialogs for various
  * purposes.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class DialogTest extends NEWTUITest

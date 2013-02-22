@@ -13,7 +13,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * 
  * This test combines JTables and Split panes.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class TableTest extends NEWTUITest

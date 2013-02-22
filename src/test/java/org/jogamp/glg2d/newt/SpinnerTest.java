@@ -13,7 +13,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  * This test demonstrates a basic spinner that holds a date.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class SpinnerTest extends NEWTUITest

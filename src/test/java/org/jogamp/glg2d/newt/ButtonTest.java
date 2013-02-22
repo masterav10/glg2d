@@ -18,7 +18,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  * This test demonstrates various buttons.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class ButtonTest extends NEWTUITest

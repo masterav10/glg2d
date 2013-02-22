@@ -12,7 +12,7 @@ import org.jogamp.glg2d.GLGraphics2D;
  * painting is called outside of AWTEventQueue, it is possible for deadlocks to
  * occur between AWT and the animator.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class GLG2DNewtEventListener extends GLG2DSimpleEventListener

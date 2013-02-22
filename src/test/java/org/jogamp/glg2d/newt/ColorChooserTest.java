@@ -7,7 +7,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  * A simple color chooser.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class ColorChooserTest extends NEWTUITest

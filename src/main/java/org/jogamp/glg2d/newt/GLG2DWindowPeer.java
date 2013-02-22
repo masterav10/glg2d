@@ -37,6 +37,11 @@ import sun.java2d.pipe.Region;
 
 import com.jogamp.newt.opengl.GLWindow;
 
+/**
+ * 
+ * @author Dan Avila
+ * 
+ */
 public class GLG2DWindowPeer implements FramePeer
 {
 	private static final Dimension MIN_SIZE = new Dimension(0, 0);

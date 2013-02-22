@@ -18,7 +18,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  * This class demonstrates isShowing() through a card layout.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class CardLayoutTest extends NEWTUITest

@@ -26,7 +26,7 @@ import com.jogamp.opengl.util.Animator;
  * -Dawt.toolkit=org.jogamp.glg2d.newt.GLG2DWindowToolkit
  * </pre>
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public abstract class NEWTUITest

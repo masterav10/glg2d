@@ -8,7 +8,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  * Demonstrates internal frames in NEWT using GLG2D.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class InternalFrameTest extends NEWTUITest

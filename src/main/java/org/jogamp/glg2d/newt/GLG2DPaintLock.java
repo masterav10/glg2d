@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * This class provides a common lock to prevent the event queue and drawing
  * listeners from executing at the same (otherwise, there will be a deadlock).
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 final class GLG2DPaintLock

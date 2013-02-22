@@ -10,7 +10,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  * Demonstrates a layered pane performing its job.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  */
 public class LayeredPaneTest extends NEWTUITest
 {

@@ -7,7 +7,7 @@ import java.util.concurrent.locks.Lock;
 /**
  * This {@link EventQueue} will not fire events unless GLG2D is not drawing.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  */
 public class GLG2DAwareEventQueue extends EventQueue
 {

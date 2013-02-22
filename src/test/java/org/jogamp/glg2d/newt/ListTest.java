@@ -10,7 +10,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  * Demonstrates a list, both within and outside a scrollpane.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class ListTest extends NEWTUITest

@@ -10,7 +10,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  * This test demonstrates combo boxes in GLG2D.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class ComboBoxTest extends NEWTUITest

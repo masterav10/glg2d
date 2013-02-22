@@ -9,7 +9,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 /**
  * This test demonstrates a JTree in a JScroolPane.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class TreeTest extends NEWTUITest

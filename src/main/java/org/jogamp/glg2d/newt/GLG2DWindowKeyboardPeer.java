@@ -5,6 +5,12 @@ import java.awt.KeyboardFocusManager;
 import java.awt.Window;
 import java.awt.peer.KeyboardFocusManagerPeer;
 
+
+/**
+ * 
+ * @author Dan Avila
+ * 
+ */
 public class GLG2DWindowKeyboardPeer implements KeyboardFocusManagerPeer
 {
 	private Component currentFocusOwner;
