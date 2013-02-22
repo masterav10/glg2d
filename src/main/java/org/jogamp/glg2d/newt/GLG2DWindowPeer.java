@@ -347,7 +347,7 @@ public class GLG2DWindowPeer implements FramePeer
 	@Override
 	public boolean isFocusable()
 	{
-		return true;
+		return false;
 	}
 
 	@Override

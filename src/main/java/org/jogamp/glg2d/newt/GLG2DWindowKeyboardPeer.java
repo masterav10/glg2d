@@ -7,13 +7,12 @@ import java.awt.peer.KeyboardFocusManagerPeer;
 
 public class GLG2DWindowKeyboardPeer implements KeyboardFocusManagerPeer
 {
-	private KeyboardFocusManager manager;
 	private Component currentFocusOwner;
 	private Window currentFocusWindow;
 
 	public GLG2DWindowKeyboardPeer(KeyboardFocusManager manager)
 	{
-		this.manager = manager;
+
 	}
 
 	@Override

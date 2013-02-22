@@ -161,29 +161,10 @@ public class MouseEventTranslator
 	{
 		final Point point = new Point();
 
-		try
-		{
-			SwingUtilities.invokeAndWait(new Runnable()
-			{
-				@Override
-			public void run()
-				{
-					Point temp = SwingUtilities
-					        .convertPoint(target, pt, source);
+		Point temp = SwingUtilities.convertPoint(target, pt, source);
 
-					point.x = temp.x;
-					point.y = temp.y;
-				}
-			});
-		}
-		catch (InvocationTargetException e)
-		{
-
-		}
-		catch (InterruptedException e)
-		{
-
-		}
+		point.x = temp.x;
+		point.y = temp.y;
 
 		return point;
 	}

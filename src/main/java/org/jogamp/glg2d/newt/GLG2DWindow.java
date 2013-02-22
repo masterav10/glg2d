@@ -84,7 +84,7 @@ public class GLG2DWindow
 
 			window.removeGLEventListener(painterListener);
 			window.removeGLEventListener(reshapeListener);
-			painterListener = new GLG2DSimpleEventListener(
+			painterListener = new GLG2DNewtEventListener(
 			        container.getRootPane());
 			reshapeListener = new GLG2DHeadlessListener(container.getRootPane());
 			window.addGLEventListener(painterListener);

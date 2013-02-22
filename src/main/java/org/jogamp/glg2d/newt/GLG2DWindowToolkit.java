@@ -84,9 +84,7 @@ import sun.awt.KeyboardFocusManagerPeerProvider;
 public class GLG2DWindowToolkit extends Toolkit implements
         KeyboardFocusManagerPeerProvider
 {
-	public static final Toolkit INST = new GLG2DWindowToolkit();
-
-	private EventQueue event = new EventQueue();
+	private EventQueue event = new GLG2DAwareEventQueue();
 	private GLG2DMousePeer defaultMousePeer = new GLG2DMousePeer();
 
 	@Override
