@@ -14,7 +14,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  * Demonstrates a raw component that draw's OpenGL stuff.
  * 
- * @author Naval Undersea Warfare Center, Newport RI
+ * @author Dan Avila
  * 
  */
 public class CanvasTest extends NEWTUITest

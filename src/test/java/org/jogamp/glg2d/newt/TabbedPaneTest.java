@@ -76,6 +76,6 @@ public class TabbedPaneTest extends NEWTUITest
 	public static void main(String[] args)
 	        throws UnsupportedLookAndFeelException
 	{
-		new TabbedPaneTest().setSize(600, 500).display();
+		new TabbedPaneTest().setSize(800, 600).display();
 	}
 }
