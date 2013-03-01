@@ -11,6 +11,12 @@ import org.jogamp.glg2d.GLGraphics2D;
 
 import com.jogamp.newt.opengl.GLWindow;
 
+/**
+ * This class provides the AWT portion of the GLG2DWindow.
+ * 
+ * @author Dan Avila
+ * 
+ */
 class GLG2DFrame extends JFrame
 {
 	private static final long serialVersionUID = 8999015711459748410L;

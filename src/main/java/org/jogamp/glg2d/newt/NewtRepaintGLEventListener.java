@@ -7,7 +7,7 @@ import javax.media.opengl.GL2GL3;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.swing.JComponent;
-import javax.swing.RepaintManager;
+import javax.swing.JRootPane;
 
 import org.jogamp.glg2d.GLGraphics2D;
 
@@ -24,7 +24,7 @@ import com.jogamp.opengl.FBObject.ColorAttachment;
 public class NewtRepaintGLEventListener implements GLEventListener
 {
 	private FBObject fbo = new FBObject();
-	private volatile boolean needsFullPaint;
+	private boolean needsFullPaint;
 	private GLG2DFrame frame;
 
 	public NewtRepaintGLEventListener(GLG2DFrame frame)
@@ -36,8 +36,9 @@ public class NewtRepaintGLEventListener implements GLEventListener
 	public void init(GLAutoDrawable drawable)
 	{
 		// basic initialization
-		RepaintManager.setCurrentManager(NewtRepaintManager.get());
+
 		frame.setGraphics(new GLGraphics2D());
+		frame.addNotify();
 
 		GL gl = drawable.getGL();
 
@@ -61,8 +62,6 @@ public class NewtRepaintGLEventListener implements GLEventListener
 
 		NewtRepaintManager manager = NewtRepaintManager.get();
 
-		manager.setCurrentDrawable(drawable);
-
 		Lock paintLock = GLG2DPaintLock.getPaintLock();
 
 		try
@@ -78,7 +77,7 @@ public class NewtRepaintGLEventListener implements GLEventListener
 			{
 				comp.paint(graphics);
 
-				needsFullPaint = false;
+				needsFullPaint = true;
 			}
 			else
 			{
@@ -112,11 +111,15 @@ public class NewtRepaintGLEventListener implements GLEventListener
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width,
 	        int height)
 	{
+		needsFullPaint = true;
+
 		GL gl = drawable.getGL();
 
 		fbo.reset(gl, width, height);
 
-		needsFullPaint = true;
+		JRootPane pane = frame.getRootPane();
+		pane.setSize(width, height);
+		pane.validate();
 	}
 
 	@Override

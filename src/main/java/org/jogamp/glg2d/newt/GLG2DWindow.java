@@ -4,10 +4,9 @@ import java.awt.Toolkit;
 
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCapabilitiesImmutable;
+import javax.media.opengl.GLEventListener;
 import javax.swing.JComponent;
 
-import org.jogamp.glg2d.GLG2DHeadlessListener;
-import org.jogamp.glg2d.GLG2DSimpleEventListener;
 import org.jogamp.glg2d.event.NewtKeyEventTranslator;
 import org.jogamp.glg2d.event.NewtMouseEventTranslator;
 
@@ -29,8 +28,7 @@ public class GLG2DWindow
 	private static final String TOOLKIT_KEY = "awt.toolkit";
 	private static final Class<?> TOOLKIT_CLASS = GLG2DWindowToolkit.class;
 
-	private GLG2DSimpleEventListener painterListener;
-	private GLG2DHeadlessListener reshapeListener;
+	private GLEventListener painterListener;
 	private NewtMouseEventTranslator evtMouseListener;
 	private NewtKeyEventTranslator evtKeyListener;
 
@@ -83,12 +81,8 @@ public class GLG2DWindow
 			}
 
 			window.removeGLEventListener(painterListener);
-			window.removeGLEventListener(reshapeListener);
-			painterListener = new GLG2DNewtEventListener(
-			        container.getRootPane());
-			reshapeListener = new GLG2DHeadlessListener(container.getRootPane());
+			painterListener = new NewtRepaintGLEventListener(container);
 			window.addGLEventListener(painterListener);
-			window.addGLEventListener(reshapeListener);
 
 			window.removeMouseListener(evtMouseListener);
 			window.removeKeyListener(evtKeyListener);
@@ -152,6 +146,7 @@ public class GLG2DWindow
 	 */
 	public void setSize(int width, int height)
 	{
+		container.setSize(width, height);
 		window.setSize(width, height);
 	}
 
@@ -163,6 +158,7 @@ public class GLG2DWindow
 	 */
 	public void setUndecorated(boolean value)
 	{
+		container.setUndecorated(value);
 		window.setUndecorated(value);
 	}
 
@@ -186,6 +182,7 @@ public class GLG2DWindow
 	 */
 	public void setTitle(String title)
 	{
+		container.setTitle(title);
 		window.setTitle(title);
 	}
 
