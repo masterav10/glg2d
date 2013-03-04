@@ -60,8 +60,6 @@ public class NewtRepaintGLEventListener implements GLEventListener
 
 		fbo.bind(gl);
 
-		NewtRepaintManager manager = NewtRepaintManager.get();
-
 		Lock paintLock = GLG2DPaintLock.getPaintLock();
 
 		try
@@ -81,7 +79,7 @@ public class NewtRepaintGLEventListener implements GLEventListener
 			}
 			else
 			{
-				manager.paintDirtyGLComponents(graphics);
+				// TODO: GLDeletgatedGraphics??
 			}
 		}
 		finally

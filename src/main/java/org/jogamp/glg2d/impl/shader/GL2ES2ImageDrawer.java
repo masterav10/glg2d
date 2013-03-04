@@ -21,6 +21,7 @@ import java.awt.geom.AffineTransform;
 import java.nio.FloatBuffer;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
 import javax.media.opengl.GL2ES2;
 
 import org.jogamp.glg2d.GLGraphics2D;
@@ -57,7 +58,7 @@ public class GL2ES2ImageDrawer extends AbstractImageHelper {
           + GLShaderGraphics2D.class.getSimpleName());
     }
 
-    gl = g2d.getGLContext().getGL().getGL2ES2();
+    gl = g2d.getGL(GL2.class);
     if (!shader.isSetup()) {
       shader.setup(gl);
     }

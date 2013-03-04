@@ -47,7 +47,7 @@ public class GL2ShapeDrawer extends AbstractShapeHelper {
   @Override
   public void setG2D(GLGraphics2D g2d) {
     super.setG2D(g2d);
-    GL gl = g2d.getGLContext().getGL();
+    GL gl = g2d.getGL(GL2.class);
     simpleFillVisitor.setGLContext(gl);
     complexFillVisitor.setGLContext(gl);
     simpleStrokeVisitor.setGLContext(gl);

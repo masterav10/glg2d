@@ -15,7 +15,7 @@
  */
 package org.jogamp.glg2d.impl.shader.text;
 
-import static org.jogamp.glg2d.impl.AbstractShapeHelper.visitShape;
+import static org.jogamp.glg2d.impl.AbstractShapeHelper.*;
 
 import java.awt.Shape;
 import java.awt.font.GlyphVector;
@@ -52,7 +52,7 @@ public class GL2ES2TextDrawer extends AbstractTextDrawer {
           + GLShaderGraphics2D.class.getSimpleName());
     }
 
-    gl = g2d.getGLContext().getGL().getGL2ES2();
+    gl = g2d.getGL(GL2ES2.class);
     if (!pipeline.isSetup()) {
       pipeline.setup(gl);
     }

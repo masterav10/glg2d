@@ -32,7 +32,7 @@ public class GL2Transformhelper extends AbstractMatrixHelper {
   @Override
   public void setG2D(GLGraphics2D g2d) {
     super.setG2D(g2d);
-    gl = g2d.getGLContext().getGL().getGL2();
+    gl = g2d.getGL(GL2.class);
 
     setupGLView();
     flushTransformToOpenGL();

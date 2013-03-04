@@ -21,6 +21,7 @@ import java.awt.Shape;
 import java.awt.Stroke;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
 
 import org.jogamp.glg2d.GLGraphics2D;
 import org.jogamp.glg2d.PathVisitor;
@@ -45,7 +46,7 @@ public class GL2ES2ShapeDrawer extends AbstractShapeHelper {
     super.setG2D(g2d);
 
     if (g2d instanceof GLShaderGraphics2D) {
-      GL gl = g2d.getGLContext().getGL();
+      GL gl = g2d.getGL(GL2.class);
       UniformBufferObject uniforms = ((GLShaderGraphics2D) g2d).getUniformsObject();
 
       lineVisitor.setGLContext(gl, uniforms);

@@ -15,7 +15,7 @@
  */
 package org.jogamp.glg2d.impl;
 
-import static org.jogamp.glg2d.impl.GLG2DNotImplemented.notImplemented;
+import static org.jogamp.glg2d.impl.GLG2DNotImplemented.*;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -74,7 +74,7 @@ public abstract class AbstractColorHelper implements GLG2DColorHelper {
 
   @Override
   public void setComposite(Composite comp) {
-    GL gl = g2d.getGLContext().getGL();
+    GL gl = g2d.getGL(GL.class);
     gl.glEnable(GL.GL_BLEND);
     if (comp instanceof AlphaComposite) {
       switch (((AlphaComposite) comp).getRule()) {

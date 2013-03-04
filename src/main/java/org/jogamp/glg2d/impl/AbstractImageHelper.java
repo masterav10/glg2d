@@ -35,6 +35,8 @@ import java.util.WeakHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.media.opengl.GL;
+
 import org.jogamp.glg2d.GLG2DImageHelper;
 import org.jogamp.glg2d.GLG2DRenderingHints;
 import org.jogamp.glg2d.GLGraphics2D;
@@ -220,7 +222,7 @@ public abstract class AbstractImageHelper implements GLG2DImageHelper
 			if (bufferedImage != null)
 			{
 				// we'll assume the image is complete and can be rendered
-				texture = AWTTextureIO.newTexture(g2d.getGLContext().getGL()
+				texture = AWTTextureIO.newTexture(g2d.getGL(GL.class)
 				        .getGLProfile(), bufferedImage, false);
 				addToCache(image, texture);
 			}

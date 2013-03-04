@@ -102,7 +102,7 @@ public class DepthSimExample {
       shiftX = Math.round(Math.sin(theta) * 100) / 100d * 1;
       shiftY = Math.round(Math.cos(theta) * 100) / 100d * 1;
 
-      gl = g2d.getGLContext().getGL().getGL2();
+      gl = g2d.getGL(GL2.class);
     }
   }
 }
