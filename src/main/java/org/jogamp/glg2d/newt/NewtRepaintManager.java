@@ -1,10 +1,10 @@
 package org.jogamp.glg2d.newt;
 
-import java.awt.Point;
+import java.awt.Container;
 import java.awt.Window;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,7 +34,7 @@ public class NewtRepaintManager extends RepaintManager
 
 	// A map of direct components.
 	private Map<GLAutoDrawable, Set<JComponent>> dirtyComponents = new HashMap<>();
-	private Set<JComponent> activeRepaints = new HashSet<>();
+	private Set<JComponent> activeRepaints = new LinkedHashSet<>();
 
 	private GLAutoDrawable currentDrawable;
 
@@ -74,7 +74,7 @@ public class NewtRepaintManager extends RepaintManager
 
 			if (dirtyComponentsForDrawing == null)
 			{
-				dirtyComponentsForDrawing = new HashSet<>();
+				dirtyComponentsForDrawing = new LinkedHashSet<>();
 				dirtyComponents.put(drawable, dirtyComponentsForDrawing);
 			}
 
@@ -109,21 +109,44 @@ public class NewtRepaintManager extends RepaintManager
 
 			for (JComponent comp : activeRepaints)
 			{
-				int x = comp.getX();
-				int y = comp.getY();
+				System.err.println(comp);
 
-				Window window = SwingUtilities.getWindowAncestor(comp);
+				GLG2DFrame window = (GLG2DFrame) SwingUtilities
+				        .getWindowAncestor(comp);
 
-				Point p = SwingUtilities.convertPoint(comp, x, y, window);
+				Container rootPane = window.getRootPane();
+				Container current = comp;
 
-				System.err.println(comp.getClass() + " " + p);
+				boolean isParent = SwingUtilities.isDescendingFrom(rootPane,
+				        current);
 
-				graphics.translate(p.x, p.y);
+				int x = 0;
+				int y = 0;
+
+				while (current != rootPane && !isParent)
+				{
+					try
+					{
+						x += current.getX();
+						y += current.getY();
+					}
+					catch (NullPointerException e)
+					{
+						e.printStackTrace();
+					}
+					current = current.getParent();
+				}
+
+				System.err.println("     " + x + " " + y);
+
+				graphics.translate(x, y);
 
 				if (comp.isShowing() && comp.isValid())
 				{
 					comp.paint(graphics);
 				}
+
+				graphics.translate(-x, -y);
 			}
 
 			activeRepaints.clear();

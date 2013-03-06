@@ -35,6 +35,8 @@ public class NewtRepaintGLEventListener implements GLEventListener
 	@Override
 	public void init(GLAutoDrawable drawable)
 	{
+		frame.addNotify();
+
 		// basic initialization
 		RepaintManager.setCurrentManager(NewtRepaintManager.get());
 		frame.setGraphics(new GLGraphics2D());
@@ -113,6 +115,9 @@ public class NewtRepaintGLEventListener implements GLEventListener
 	        int height)
 	{
 		GL gl = drawable.getGL();
+
+		frame.setSize(width, height);
+		frame.validate();
 
 		fbo.reset(gl, width, height);
 

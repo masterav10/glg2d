@@ -44,26 +44,9 @@ public class GLG2DLightweightPeer implements LightweightPeer
 		this.target = target;
 	}
 
-	private void log()
-	{
-		StackTraceElement[] trace = Thread.currentThread().getStackTrace();
-
-		String name = target.getClass().getName();
-
-		// if ("".equals(name.trim()))
-		// {
-		// name = target.getClass().getName();
-		//
-		// name = name.substring(name.lastIndexOf('.') + 1);
-		// }
-
-		System.err.println(name + ": " + trace[2]);
-	}
-
 	@Override
 	public boolean isObscured()
 	{
-		log();
 
 		return false;
 	}
@@ -71,7 +54,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public boolean canDetermineObscurity()
 	{
-		log();
+
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -79,14 +62,14 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public void setVisible(boolean v)
 	{
-		log();
+
 		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void setEnabled(boolean e)
 	{
-		log();
+
 		// TODO Auto-generated method stub
 
 	}
@@ -94,7 +77,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public void paint(Graphics g)
 	{
-		log();
+
 		// TODO Auto-generated method stub
 
 	}
@@ -102,7 +85,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public void print(Graphics g)
 	{
-		log();
+
 		// TODO Auto-generated method stub
 
 	}
@@ -110,7 +93,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public void setBounds(int x, int y, int width, int height, int op)
 	{
-		log();
+
 		// TODO Auto-generated method stub
 
 	}
@@ -118,14 +101,14 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public void handleEvent(AWTEvent e)
 	{
-		// log();
+		//
 		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void coalescePaintEvent(PaintEvent e)
 	{
-		log();
+
 		// TODO Auto-generated method stub
 
 	}
@@ -133,7 +116,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public Point getLocationOnScreen()
 	{
-		log();
+
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -141,7 +124,6 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public Dimension getPreferredSize()
 	{
-		log();
 
 		return MIN_SIZE;
 	}
@@ -149,7 +131,6 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public Dimension getMinimumSize()
 	{
-		log();
 
 		return MIN_SIZE;
 	}
@@ -157,7 +138,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public ColorModel getColorModel()
 	{
-		log();
+
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -171,7 +152,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public Graphics getGraphics()
 	{
-		log();
+
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -179,7 +160,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public FontMetrics getFontMetrics(Font font)
 	{
-		log();
+
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -187,7 +168,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public void dispose()
 	{
-		log();
+
 		// TODO Auto-generated method stub
 
 	}
@@ -195,7 +176,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public void setForeground(Color c)
 	{
-		// log();
+		//
 		// TODO Auto-generated method stub
 
 	}
@@ -203,7 +184,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public void setBackground(Color c)
 	{
-		// log();
+		//
 		// TODO Auto-generated method stub
 
 	}
@@ -211,7 +192,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public void setFont(Font f)
 	{
-		// log();
+		//
 		// TODO Auto-generated method stub
 
 	}
@@ -219,7 +200,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	@Override
 	public void updateCursorImmediately()
 	{
-		log();
+
 		// TODO Auto-generated method stub
 
 	}
@@ -229,7 +210,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	        boolean focusedWindowChangeAllowed, long time, Cause cause)
 	{
 		// TODO Auto-generated method stub
-		log();
+
 		return false;
 	}
 
@@ -237,7 +218,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public boolean isFocusable()
 	{
 		// TODO Auto-generated method stub
-		log();
+
 		return false;
 	}
 
@@ -245,7 +226,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public Image createImage(ImageProducer producer)
 	{
 		// TODO Auto-generated method stub
-		log();
+
 		return null;
 	}
 
@@ -253,7 +234,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public Image createImage(int width, int height)
 	{
 		// TODO Auto-generated method stub
-		log();
+
 		return null;
 	}
 
@@ -261,7 +242,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public VolatileImage createVolatileImage(int width, int height)
 	{
 		// TODO Auto-generated method stub
-		log();
+
 		return null;
 	}
 
@@ -269,7 +250,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public boolean prepareImage(Image img, int w, int h, ImageObserver o)
 	{
 		// TODO Auto-generated method stub
-		log();
+
 		return false;
 	}
 
@@ -277,7 +258,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public int checkImage(Image img, int w, int h, ImageObserver o)
 	{
 		// TODO Auto-generated method stub
-		log();
+
 		return 0;
 	}
 
@@ -285,7 +266,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public GraphicsConfiguration getGraphicsConfiguration()
 	{
 		// TODO Auto-generated method stub
-		log();
+
 		return null;
 	}
 
@@ -293,7 +274,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public boolean handlesWheelScrolling()
 	{
 		// TODO Auto-generated method stub
-		log();
+
 		return false;
 	}
 
@@ -302,7 +283,6 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	        throws AWTException
 	{
 		// TODO Auto-generated method stub
-		log();
 
 	}
 
@@ -310,7 +290,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public Image getBackBuffer()
 	{
 		// TODO Auto-generated method stub
-		log();
+
 		return null;
 	}
 
@@ -318,7 +298,6 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public void flip(int x1, int y1, int x2, int y2, FlipContents flipAction)
 	{
 		// TODO Auto-generated method stub
-		log();
 
 	}
 
@@ -326,7 +305,6 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public void destroyBuffers()
 	{
 		// TODO Auto-generated method stub
-		log();
 
 	}
 
@@ -334,7 +312,6 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public void reparent(ContainerPeer newContainer)
 	{
 		// TODO Auto-generated method stub
-		log();
 
 	}
 
@@ -342,7 +319,7 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public boolean isReparentSupported()
 	{
 		// TODO Auto-generated method stub
-		log();
+
 		return false;
 	}
 
@@ -350,7 +327,6 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public void layout()
 	{
 		// TODO Auto-generated method stub
-		log();
 
 	}
 
@@ -358,7 +334,6 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public void applyShape(Region shape)
 	{
 		// TODO Auto-generated method stub
-		log();
 
 	}
 
@@ -366,14 +341,13 @@ public class GLG2DLightweightPeer implements LightweightPeer
 	public void setZOrder(ComponentPeer above)
 	{
 		// TODO Auto-generated method stub
-		log();
 
 	}
 
 	@Override
 	public boolean updateGraphicsData(GraphicsConfiguration gc)
 	{
-		log();
+
 		// TODO Auto-generated method stub
 		return false;
 	}

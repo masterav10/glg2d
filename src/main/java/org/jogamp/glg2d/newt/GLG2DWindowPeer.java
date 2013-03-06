@@ -6,6 +6,7 @@ import java.awt.BufferCapabilities;
 import java.awt.BufferCapabilities.FlipContents;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -29,8 +30,6 @@ import java.awt.image.VolatileImage;
 import java.awt.peer.ComponentPeer;
 import java.awt.peer.ContainerPeer;
 import java.awt.peer.FramePeer;
-
-import javax.media.nativewindow.util.InsetsImmutable;
 
 import sun.awt.CausedFocusEvent.Cause;
 import sun.java2d.pipe.Region;
@@ -64,7 +63,6 @@ public class GLG2DWindowPeer implements FramePeer
 	public void toFront()
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -121,14 +119,12 @@ public class GLG2DWindowPeer implements FramePeer
 	public void setOpaque(boolean isOpaque)
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void updateWindow()
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -138,16 +134,18 @@ public class GLG2DWindowPeer implements FramePeer
 
 	}
 
+	private Insets insets = new Insets(0, 0, 0, 0);
+
 	@Override
 	public Insets getInsets()
 	{
-		GLWindow window = frame.getWindow();
-
-		InsetsImmutable glinsets = window.getInsets();
-
-		Insets insets = new Insets(glinsets.getTopHeight(),
-		        glinsets.getLeftWidth(), glinsets.getBottomHeight(),
-		        glinsets.getRightWidth());
+		// GLWindow window = frame.getWindow();
+		//
+		// InsetsImmutable glinsets = window.getInsets();
+		//
+		// Insets insets = new Insets(glinsets.getTopHeight(),
+		// glinsets.getLeftWidth(), glinsets.getBottomHeight(),
+		// glinsets.getRightWidth());
 
 		return insets;
 	}
@@ -162,8 +160,20 @@ public class GLG2DWindowPeer implements FramePeer
 	@Override
 	public void endValidate()
 	{
-		// TODO Auto-generated method stub
+		// test(this.frame);
+	}
 
+	private void test(Component comp)
+	{
+		if (comp instanceof Container)
+		{
+			Container next = (Container) comp;
+
+			for (int i = 0; i < next.getComponentCount(); i++)
+			{
+				test(next.getComponent(i));
+			}
+		}
 	}
 
 	@Override
@@ -177,7 +187,6 @@ public class GLG2DWindowPeer implements FramePeer
 	public void endLayout()
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -242,6 +251,8 @@ public class GLG2DWindowPeer implements FramePeer
 	public Point getLocationOnScreen()
 	{
 		GLWindow window = frame.getWindow();
+
+		// InsetsImmutable insets = window.getInsets();
 
 		awtTempPoint.x = window.getX();
 		awtTempPoint.y = window.getY();

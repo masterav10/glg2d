@@ -36,6 +36,7 @@ public abstract class NEWTUITest
 	private int height = 400;
 	private boolean useNimbus = false;
 	private boolean fullScreen = false;
+	private boolean undecorated;
 
 	public NEWTUITest setSize(int width, int height)
 	{
@@ -55,6 +56,13 @@ public abstract class NEWTUITest
 	public NEWTUITest setNimbus(boolean useNimbus)
 	{
 		this.useNimbus = useNimbus;
+
+		return this;
+	}
+
+	public NEWTUITest setUndecorated(boolean undecorated)
+	{
+		this.undecorated = undecorated;
 
 		return this;
 	}
@@ -86,6 +94,7 @@ public abstract class NEWTUITest
 
 		window.setContentPane(getContentPane());
 
+		window.setUndecorated(undecorated);
 		window.setTitle(this.getClass().getSimpleName());
 		window.setSize(width, height);
 		window.setVisible(true);

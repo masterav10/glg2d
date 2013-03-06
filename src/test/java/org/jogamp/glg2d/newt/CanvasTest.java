@@ -43,6 +43,8 @@ public class CanvasTest extends NEWTUITest
 
 				gl.glClearColor(c, c, c, 1.0f);
 				gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+
+				repaint();
 			}
 		};
 
