@@ -1,15 +1,12 @@
 package org.jogamp.glg2d.newt;
 
-import java.awt.Rectangle;
+import java.awt.Point;
 import java.awt.Window;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
 import javax.media.opengl.GLAutoDrawable;
 import javax.swing.JComponent;
@@ -37,12 +34,7 @@ public class NewtRepaintManager extends RepaintManager
 
 	// A map of direct components.
 	private Map<GLAutoDrawable, Set<JComponent>> dirtyComponents = new HashMap<>();
-	private Queue<Rectangle> rectCache = new ConcurrentLinkedDeque<Rectangle>();
-
-	// Maintains dirty components. Using an identity map because the key may
-	// change.
-	private Map<JComponent, Rectangle> dirtyRegions = new HashMap<>();
-	private Collection<JComponent> activeRepaints = new ArrayList<>(20);
+	private Set<JComponent> activeRepaints = new HashSet<>();
 
 	private GLAutoDrawable currentDrawable;
 
@@ -77,47 +69,11 @@ public class NewtRepaintManager extends RepaintManager
 				dirtyComponents.put(drawable, dirtyComponentsForDrawing);
 			}
 
-			Rectangle dirtyRegion = dirtyRegions.get(c);
-
 			synchronized (this)
 			{
-				if (dirtyRegion == null)
-				{
-					dirtyRegion = acquireRect();
-
-					dirtyRegion.setBounds(x, y, w, h);
-
-					dirtyComponentsForDrawing.add(c);
-					dirtyRegions.put(c, dirtyRegion);
-				}
-				else
-				{
-					Rectangle newBounds = acquireRect();
-					newBounds.setBounds(x, y, w, h);
-
-					Rectangle.union(dirtyRegion, newBounds, dirtyRegion);
-
-					recycleRect(newBounds);
-				}
+				dirtyComponentsForDrawing.add(c);
 			}
 		}
-	}
-
-	private Rectangle acquireRect()
-	{
-		Rectangle rect = rectCache.poll();
-
-		if (rect == null)
-		{
-			rect = new Rectangle();
-		}
-
-		return rect;
-	}
-
-	private void recycleRect(Rectangle rect)
-	{
-		rectCache.add(rect);
 	}
 
 	/**
@@ -144,18 +100,21 @@ public class NewtRepaintManager extends RepaintManager
 
 			for (JComponent comp : activeRepaints)
 			{
-				Rectangle dirtyRegion = dirtyRegions.remove(comp);
+				int x = comp.getX();
+				int y = comp.getY();
 
-				// comp.paintImmediately(0, 0, comp.getWidth(),
-				// comp.getHeight());
-				graphics.translate(comp.getX(), comp.getY());
+				Window window = SwingUtilities.getWindowAncestor(comp);
+
+				Point p = SwingUtilities.convertPoint(comp, x, y, window);
+
+				System.err.println(comp.getClass() + " " + p);
+
+				graphics.translate(p.x, p.y);
 
 				if (comp.isShowing() && comp.isValid())
 				{
 					comp.paint(graphics);
 				}
-
-				recycleRect(dirtyRegion);
 			}
 
 			activeRepaints.clear();

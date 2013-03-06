@@ -26,7 +26,7 @@ public class ButtonTest extends NEWTUITest
 	@Override
 	protected JComponent getContentPane()
 	{
-		int gridSize = 6;
+		int gridSize = 2;
 
 		JLabel selection = new JLabel("Clicks will show up here.");
 		JPanel contentPane = new JPanel(new BorderLayout());

@@ -7,6 +7,7 @@ import javax.media.opengl.GLCapabilitiesImmutable;
 import javax.media.opengl.GLEventListener;
 import javax.swing.JComponent;
 
+import org.jogamp.glg2d.GLG2DHeadlessListener;
 import org.jogamp.glg2d.event.NewtKeyEventTranslator;
 import org.jogamp.glg2d.event.NewtMouseEventTranslator;
 
@@ -29,9 +30,13 @@ public class GLG2DWindow
 	private static final Class<?> TOOLKIT_CLASS = GLG2DWindowToolkit.class;
 
 	private GLEventListener painterListener;
+	private GLG2DHeadlessListener reshapeListener;
 	private NewtMouseEventTranslator evtMouseListener;
 	private NewtKeyEventTranslator evtKeyListener;
 
+	/**
+	 * @deprecated - this should be built directly into the peer.
+	 */
 	private GLWindow window;
 	private GLG2DFrame container;
 
@@ -81,8 +86,11 @@ public class GLG2DWindow
 			}
 
 			window.removeGLEventListener(painterListener);
+			window.removeGLEventListener(reshapeListener);
 			painterListener = new NewtRepaintGLEventListener(container);
+			reshapeListener = new GLG2DHeadlessListener(container.getRootPane());
 			window.addGLEventListener(painterListener);
+			window.addGLEventListener(reshapeListener);
 
 			window.removeMouseListener(evtMouseListener);
 			window.removeKeyListener(evtKeyListener);

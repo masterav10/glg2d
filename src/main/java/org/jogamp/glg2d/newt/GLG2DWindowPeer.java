@@ -77,8 +77,9 @@ public class GLG2DWindowPeer implements FramePeer
 	@Override
 	public void setAlwaysOnTop(boolean alwaysOnTop)
 	{
-		// TODO Auto-generated method stub
+		GLWindow window = frame.getWindow();
 
+		window.setAlwaysOnTop(true);
 	}
 
 	@Override
@@ -197,49 +198,42 @@ public class GLG2DWindowPeer implements FramePeer
 	public void setVisible(boolean v)
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void setEnabled(boolean e)
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void paint(Graphics g)
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void print(Graphics g)
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void setBounds(int x, int y, int width, int height, int op)
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void handleEvent(AWTEvent e)
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void coalescePaintEvent(PaintEvent e)
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	private Point awtTempPoint = new Point();
@@ -400,8 +394,7 @@ public class GLG2DWindowPeer implements FramePeer
 	@Override
 	public boolean handlesWheelScrolling()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
