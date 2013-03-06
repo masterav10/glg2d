@@ -48,6 +48,11 @@ public class NewtRepaintManager extends RepaintManager
 		return INST;
 	}
 
+	@Override
+	public void addDirtyRegion(Window window, int x, int y, int w, int h)
+	{
+	}
+
 	/**
 	 * This method is thread safe.
 	 */
