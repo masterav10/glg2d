@@ -51,6 +51,10 @@ public class NewtRepaintManager extends RepaintManager
 	@Override
 	public void addDirtyRegion(Window window, int x, int y, int w, int h)
 	{
+		synchronized (this)
+		{
+			dirtyComponents.clear();
+		}
 	}
 
 	/**
