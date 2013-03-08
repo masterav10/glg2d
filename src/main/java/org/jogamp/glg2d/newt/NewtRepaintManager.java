@@ -112,12 +112,7 @@ public class NewtRepaintManager extends RepaintManager
 			}
 		}
 
-		GLGraphics2D graphics = (GLGraphics2D) frame.getGraphics();
-		graphics.prePaint(frame.getWindow().getContext());
-
 		paintRecentlyDirtiedComponents();
-
-		graphics.postPaint();
 	}
 
 	private Set<JComponent> repaintSet(Window window)
