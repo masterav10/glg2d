@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JViewport;
 
 import org.jogamp.glg2d.GLG2DCanvas;
-import org.jogamp.glg2d.GLGraphics2D;
 
 import com.jogamp.newt.opengl.GLWindow;
 
@@ -22,7 +21,6 @@ class GLG2DFrame extends JFrame
 	private static final long serialVersionUID = 8999015711459748410L;
 
 	private GLWindow window;
-	private GLGraphics2D g;
 
 	public GLG2DFrame(GLWindow window)
 	{
@@ -43,29 +41,6 @@ class GLG2DFrame extends JFrame
 		verifyHierarchy(this);
 
 		super.addNotify();
-	}
-
-	@Override
-	public GLGraphics2D getGraphics()
-	{
-		return g;
-	}
-
-	/**
-	 * Sets the current graphics. This method must be called from a GLMethod.
-	 * 
-	 * @param g
-	 *            - the graphics. If null, then the current graphics will be
-	 *            disposed.
-	 */
-	void setGraphics(GLGraphics2D g)
-	{
-		if (g == null && this.g != null)
-		{
-			this.g.dispose();
-		}
-
-		this.g = g;
 	}
 
 	/**

@@ -1,21 +1,20 @@
 package org.jogamp.glg2d.newt;
 
-import java.awt.Container;
 import java.awt.Window;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
 
 import javax.media.opengl.GLAutoDrawable;
 import javax.swing.JComponent;
+import javax.swing.JToolTip;
 import javax.swing.RepaintManager;
 import javax.swing.SwingUtilities;
 
 import org.jogamp.glg2d.GLGraphics2D;
-
-import com.jogamp.newt.opengl.GLWindow;
 
 /**
  * This repaint manager extends the default implementation by intercepting Swing
@@ -33,10 +32,10 @@ public class NewtRepaintManager extends RepaintManager
 	private static final NewtRepaintManager INST = new NewtRepaintManager();
 
 	// A map of direct components.
-	private Map<GLAutoDrawable, Set<JComponent>> dirtyComponents = new HashMap<>();
-	private Set<JComponent> activeRepaints = new LinkedHashSet<>();
+	private Map<Window, Set<JComponent>> dirtyComponents = new HashMap<>();
+	private Map<Window, Boolean> fullRepaints = new ConcurrentHashMap<>();
 
-	private GLAutoDrawable currentDrawable;
+	private Set<JComponent> activeRepaints = new LinkedHashSet<>();
 
 	public NewtRepaintManager()
 	{
@@ -53,7 +52,7 @@ public class NewtRepaintManager extends RepaintManager
 	{
 		synchronized (this)
 		{
-			dirtyComponents.clear();
+			fullRepaints.put(window, true);
 		}
 	}
 
@@ -67,19 +66,10 @@ public class NewtRepaintManager extends RepaintManager
 
 		if (window instanceof GLG2DFrame)
 		{
-			GLWindow drawable = ((GLG2DFrame) window).getWindow();
-
-			Set<JComponent> dirtyComponentsForDrawing = dirtyComponents
-			        .get(drawable);
-
-			if (dirtyComponentsForDrawing == null)
-			{
-				dirtyComponentsForDrawing = new LinkedHashSet<>();
-				dirtyComponents.put(drawable, dirtyComponentsForDrawing);
-			}
-
 			synchronized (this)
 			{
+				Set<JComponent> dirtyComponentsForDrawing = repaintSet(window);
+
 				dirtyComponentsForDrawing.add(c);
 			}
 		}
@@ -92,75 +82,87 @@ public class NewtRepaintManager extends RepaintManager
 	 * This method is not thread safe, and should only be called from a single
 	 * thread.
 	 */
-	void paintDirtyGLComponents(GLGraphics2D graphics)
+	void paintDirtyGLComponents(GLG2DFrame frame)
 	{
-		Collection<JComponent> dirtyComponentsForDrawable = dirtyComponents
-		        .get(currentDrawable);
+		Set<JComponent> dirtyComponentsForDrawable = repaintSet(frame);
 
-		if (dirtyComponentsForDrawable != null)
+		synchronized (this)
 		{
-			synchronized (this)
-			{
-				// prevents addDirtyRegion(..) calls from repaints from
-				// affecting traversal.
-				activeRepaints.addAll(dirtyComponentsForDrawable);
-				dirtyComponentsForDrawable.clear();
-			}
-
-			for (JComponent comp : activeRepaints)
-			{
-				System.err.println(comp);
-
-				GLG2DFrame window = (GLG2DFrame) SwingUtilities
-				        .getWindowAncestor(comp);
-
-				Container rootPane = window.getRootPane();
-				Container current = comp;
-
-				boolean isParent = SwingUtilities.isDescendingFrom(rootPane,
-				        current);
-
-				int x = 0;
-				int y = 0;
-
-				while (current != rootPane && !isParent)
-				{
-					try
-					{
-						x += current.getX();
-						y += current.getY();
-					}
-					catch (NullPointerException e)
-					{
-						e.printStackTrace();
-					}
-					current = current.getParent();
-				}
-
-				System.err.println("     " + x + " " + y);
-
-				graphics.translate(x, y);
-
-				if (comp.isShowing() && comp.isValid())
-				{
-					comp.paint(graphics);
-				}
-
-				graphics.translate(-x, -y);
-			}
-
 			activeRepaints.clear();
+
+			boolean needsFullRepaint = fullRepaints.get(frame).booleanValue();
+
+			// prevents addDirtyRegion(..) calls from repaints from
+			// affecting traversal.
+			if (needsFullRepaint)
+			{
+				activeRepaints.add(frame.getRootPane());
+			}
+			else
+			{
+				activeRepaints.addAll(dirtyComponentsForDrawable);
+			}
+
+			dirtyComponentsForDrawable.clear();
+			fullRepaints.put(frame, false);
+
+			if (activeRepaints.isEmpty())
+			{
+				return;
+			}
 		}
+
+		GLGraphics2D graphics = (GLGraphics2D) frame.getGraphics();
+		graphics.prePaint(frame.getWindow().getContext());
+
+		paintRecentlyDirtiedComponents();
+
+		graphics.postPaint();
+	}
+
+	private Set<JComponent> repaintSet(Window window)
+	{
+		Set<JComponent> set = dirtyComponents.get(window);
+
+		if (set == null)
+		{
+			set = new LinkedHashSet<>();
+			dirtyComponents.put(window, set);
+		}
+
+		return set;
 	}
 
 	/**
-	 * Sets the current drawable to used by this repaint manager.
-	 * 
-	 * @param currentDrawable
-	 *            - the target current drawable.
+	 * Paints all of the components that were recently marked dirty.
 	 */
-	void setCurrentDrawable(GLAutoDrawable currentDrawable)
+	private void paintRecentlyDirtiedComponents()
 	{
-		this.currentDrawable = currentDrawable;
+		Lock paintLock = GLG2DPaintLock.getPaintLock();
+
+		try
+		{
+			paintLock.lock();
+
+			for (JComponent comp : activeRepaints)
+			{
+				if (comp instanceof JToolTip)
+				{
+					// JToolTips don't belong to parent window. Probably
+					// need to
+					// create a special texture for those.
+					continue;
+				}
+
+				int w = comp.getWidth();
+				int h = comp.getHeight();
+
+				comp.paintImmediately(0, 0, w, h);
+			}
+		}
+		finally
+		{
+			paintLock.unlock();
+		}
 	}
 }

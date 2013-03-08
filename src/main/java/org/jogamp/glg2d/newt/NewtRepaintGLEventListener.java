@@ -1,15 +1,10 @@
 package org.jogamp.glg2d.newt;
 
-import java.util.concurrent.locks.Lock;
-
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2GL3;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
-import javax.swing.JComponent;
 import javax.swing.RepaintManager;
-
-import org.jogamp.glg2d.GLGraphics2D;
 
 import com.jogamp.opengl.FBObject;
 import com.jogamp.opengl.FBObject.ColorAttachment;
@@ -24,7 +19,6 @@ import com.jogamp.opengl.FBObject.ColorAttachment;
 public class NewtRepaintGLEventListener implements GLEventListener
 {
 	private FBObject fbo = new FBObject();
-	private volatile boolean needsFullPaint;
 	private GLG2DFrame frame;
 
 	public NewtRepaintGLEventListener(GLG2DFrame frame)
@@ -39,7 +33,6 @@ public class NewtRepaintGLEventListener implements GLEventListener
 
 		// basic initialization
 		RepaintManager.setCurrentManager(NewtRepaintManager.get());
-		frame.setGraphics(new GLGraphics2D());
 
 		GL gl = drawable.getGL();
 
@@ -49,8 +42,6 @@ public class NewtRepaintGLEventListener implements GLEventListener
 		fbo.attachColorbuffer(gl, 0, attachment);
 
 		fbo.unbind(gl);
-
-		needsFullPaint = true;
 	}
 
 	@Override
@@ -62,35 +53,7 @@ public class NewtRepaintGLEventListener implements GLEventListener
 		fbo.bind(gl);
 
 		NewtRepaintManager manager = NewtRepaintManager.get();
-
-		manager.setCurrentDrawable(drawable);
-
-		Lock paintLock = GLG2DPaintLock.getPaintLock();
-
-		try
-		{
-			paintLock.lock();
-
-			GLGraphics2D graphics = frame.getGraphics();
-			graphics.prePaint(drawable.getContext());
-
-			JComponent comp = frame.getRootPane();
-
-			if (needsFullPaint)
-			{
-				comp.paint(graphics);
-
-				needsFullPaint = false;
-			}
-			else
-			{
-				manager.paintDirtyGLComponents(graphics);
-			}
-		}
-		finally
-		{
-			paintLock.unlock();
-		}
+		manager.paintDirtyGLComponents(frame);
 
 		fbo.unbind(gl);
 
@@ -121,7 +84,8 @@ public class NewtRepaintGLEventListener implements GLEventListener
 
 		fbo.reset(gl, width, height);
 
-		needsFullPaint = true;
+		RepaintManager.currentManager(frame).addDirtyRegion(frame, x, y, width,
+		        height);
 	}
 
 	@Override
@@ -130,8 +94,6 @@ public class NewtRepaintGLEventListener implements GLEventListener
 		GL gl = drawable.getGL();
 
 		fbo.destroy(gl);
-
-		frame.setGraphics(null);
 	}
 
 	/**

@@ -28,7 +28,25 @@ public class TracingAspect
 
 	}
 
-	@Around("peerMethods() && !ignoreList()")
+	@Pointcut("execution(* org.jogamp.glg2d.GLGraphics2D.translate(..)) || execution(* org.jogamp.glg2d.GLGraphics2D.create(..)) || execution(* org.jogamp.glg2d.GLGraphics2D.draw*(..)) || execution(* org.jogamp.glg2d.GLGraphics2D.dispose(..))")
+	public void graphics()
+	{
+
+	}
+
+	@Pointcut("execution(* org.jogamp.glg2d.GLGraphics2D.getGLContext(..)) || execution(* org.jogamp.glg2d.GLGraphics2D.setCanvas(..)) || execution(* org.jogamp.glg2d.GLGraphics2D.prePaint(..))")
+	public void ignoreGraphics()
+	{
+
+	}
+
+	// @Around("graphics() && !ignoreGraphics()")
+	public Object graphics(ProceedingJoinPoint pjp) throws Throwable
+	{
+		return trace(pjp);
+	}
+
+	// @Around("peerMethods() && !ignoreList()")
 	public Object trace(ProceedingJoinPoint pjp) throws Throwable
 	{
 		Object[] args = pjp.getArgs();

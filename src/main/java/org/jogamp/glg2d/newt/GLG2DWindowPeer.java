@@ -31,6 +31,8 @@ import java.awt.peer.ComponentPeer;
 import java.awt.peer.ContainerPeer;
 import java.awt.peer.FramePeer;
 
+import org.jogamp.glg2d.GLGraphics2D;
+
 import sun.awt.CausedFocusEvent.Cause;
 import sun.java2d.pipe.Region;
 
@@ -294,8 +296,11 @@ public class GLG2DWindowPeer implements FramePeer
 	@Override
 	public Graphics getGraphics()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		GLGraphics2D graphics = new GLGraphics2D();
+
+		graphics.prePaint(frame.getWindow().getContext());
+
+		return graphics;
 	}
 
 	@Override
@@ -309,14 +314,12 @@ public class GLG2DWindowPeer implements FramePeer
 	public void dispose()
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void setForeground(Color c)
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -330,7 +333,6 @@ public class GLG2DWindowPeer implements FramePeer
 	public void setFont(Font f)
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override

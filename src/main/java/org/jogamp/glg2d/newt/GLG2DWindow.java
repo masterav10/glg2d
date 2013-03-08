@@ -104,10 +104,8 @@ public class GLG2DWindow
 	 */
 	public void setVisible(boolean visible)
 	{
-		window.setVisible(visible);
 		container.setVisible(visible);
-
-		System.err.println(container.getRootPane());
+		window.setVisible(visible);
 	}
 
 	/**
